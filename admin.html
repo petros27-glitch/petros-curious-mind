@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Admin Dashboard | Petros Curious Mind
+    </title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="container">
+
+        <div class="brand">
+
+            <h1>
+                Petros Curious Mind
+            </h1>
+
+        </div>
+
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="admin.html">
+                Admin
+            </a>
+
+            <a href="account.html">
+                Account
+            </a>
+
+            <a href="#" id="logoutBtn">
+                Logout
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <!-- ADMIN WELCOME -->
+
+    <section class="hero">
+
+        <h2>
+            Admin Dashboard
+        </h2>
+
+        <p id="adminWelcome">
+            Checking admin access...
+        </p>
+
+    </section>
+
+
+
+    <!-- STATISTICS -->
+
+    <section class="dashboard-stats">
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Stories
+            </h3>
+
+            <strong id="total-stories">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Published
+            </h3>
+
+            <strong id="published-stories">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Drafts
+            </h3>
+
+            <strong id="draft-stories">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Likes
+            </h3>
+
+            <strong id="total-likes">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Comments
+            </h3>
+
+            <strong id="total-comments">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Users
+            </h3>
+
+            <strong id="total-users">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Visits
+            </h3>
+
+            <strong id="total-visits">
+                0
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- CREATE / EDIT STORY -->
+
+    <section class="admin-section">
+
+
+        <h2 id="formTitle">
+            Create New Story
+        </h2>
+
+
+        <form id="storyForm">
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    Story Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Enter story title"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="content">
+                    Story Content
+                </label>
+
+                <textarea
+                    id="content"
+                    rows="15"
+                    placeholder="Write your story here..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="imageUrl">
+                    Image URL
+                </label>
+
+                <input
+                    type="url"
+                    id="imageUrl"
+                    placeholder="https://example.com/image.jpg"
+                >
+
+            </div>
+
+
+
+            <!-- IMAGE PREVIEW -->
+
+            <div id="imagePreview"></div>
+
+
+
+            <div class="form-group">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="published"
+                    >
+
+                    Publish this story
+
+                </label>
+
+            </div>
+
+
+
+            <div class="admin-buttons">
+
+                <button
+                    type="submit"
+                    id="saveButton"
+                >
+                    Publish Story
+                </button>
+
+
+                <button
+                    type="button"
+                    id="cancelButton"
+                    style="display:none;"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- STORIES -->
+
+    <section class="admin-section">
+
+
+        <div class="section-heading">
+
+            <h2>
+                All Stories
+            </h2>
+
+
+            <button
+                type="button"
+                onclick="loadEverything()"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+
+        <div id="storiesContainer">
+
+            <p>
+                Loading stories...
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            © 2026 Petros Curious Mind
+        </p>
+
+
+        <div>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="privacy.html">
+                Privacy
+            </a>
+
+            <a href="terms.html">
+                Terms
+            </a>
+
+            <a href="cookies.html">
+                Cookies
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+
+<script>
+
+// PART 2 CONTINUES here
+// ============================================
+// VARIABLES
+// ============================================
+
+let currentUser = null;
+let editingStoryId = null;
+
+const storyForm =
+    document.getElementById("storyForm");
+
+const titleInput =
+    document.getElementById("title");
+
+const contentInput =
+    document.getElementById("content");
+
+const imageUrlInput =
+    document.getElementById("imageUrl");
+
+const publishedInput =
+    document.getElementById("published");
+
+const imagePreview =
+    document.getElementById("imagePreview");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+const cancelButton =
+    document.getElementById("cancelButton");
+
+const formTitle =
+    document.getElementById("formTitle");
+
+const storiesContainer =
+    document.getElementById("storiesContainer");
+
+
+// ============================================
+// ESCAPE HTML
+// ============================================
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+// ============================================
+// CHECK ADMIN
+// ============================================
+
+async function checkAdmin() {
+
+    const {
+        data: {
+            user
+        },
+        error: userError
+    } = await supabaseClient.auth.getUser();
+
+
+    if (userError || !user) {
+
+        console.error(
+            "Authentication error:",
+            userError
+        );
+
+        alert("Please sign in first.");
+
+        location.href = "signin.html";
+
+        return false;
+    }
+
+
+    currentUser = user;
+
+
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("profiles")
+        .select("id,name,age,is_admin")
+        .eq("id", user.id)
+        .single();
+
+
+    if (profileError) {
+
+        console.error(
+            "Profile error:",
+            profileError
+        );
+
+        alert(
+            "Could not load your profile."
+        );
+
+        return false;
+    }
+
+
+    if (!profile || profile.is_admin !== true) {
+
+        alert(
+            "You are not authorized to access this page."
+        );
+
+        location.href = "index.html";
+
+        return false;
+    }
+
+
+    const welcome =
+        document.getElementById(
+            "adminWelcome"
+        );
+
+
+    if (welcome) {
+
+        welcome.textContent =
+            "Welcome, " +
+            (profile.name || "Admin") +
+            " — you have administrator access.";
+
+    }
+
+
+    return true;
+}
+
+
+// ============================================
+// IMAGE PREVIEW
+// ============================================
+
+function updateImagePreview() {
+
+    const url =
+        imageUrlInput.value.trim();
+
+
+    if (!url) {
+
+        imagePreview.innerHTML = "";
+
+        return;
+    }
+
+
+    imagePreview.innerHTML = `
+
+        <div class="story-image">
+
+            <img
+                src="${escapeHtml(url)}"
+                alt="Image preview"
+                loading="lazy"
+                decoding="async"
+                onerror="
+                    this.parentElement.innerHTML =
+                    '<p>Image could not be loaded.</p>'
+                "
+            >
+
+        </div>
+
+    `;
+}
+
+
+// ============================================
+// SAVE STORY
+// ============================================
+
+async function saveStory() {
+
+    const title =
+        titleInput.value.trim();
+
+    const content =
+        contentInput.value.trim();
+
+    const imageUrl =
+        imageUrlInput.value.trim();
+
+    const published =
+        publishedInput.checked;
+
+
+    if (!title || !content) {
+
+        alert(
+            "Please enter a title and story content."
+        );
+
+        return;
+    }
+
+
+    saveButton.disabled = true;
+
+    saveButton.textContent =
+        editingStoryId
+            ? "Updating..."
+            : "Saving...";
+
+
+    const storyData = {
+
+        title: title,
+
+        content: content,
+
+        image_url: imageUrl || null,
+
+        published: published
+
+    };
+
+
+    let error;
+
+
+    if (editingStoryId) {
+
+        const result =
+            await supabaseClient
+                .from("stories")
+                .update(storyData)
+                .eq(
+                    "id",
+                    editingStoryId
+                );
+
+        error = result.error;
+
+
+    } else {
+
+        const result =
+            await supabaseClient
+                .from("stories")
+                .insert(storyData);
+
+        error = result.error;
+    }
+
+
+    if (error) {
+
+        console.error(
+            "Save story error:",
+            error
+        );
+
+        alert(
+            "Could not save story:\n\n" +
+            error.message
+        );
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+            editingStoryId
+                ? "Update Story"
+                : "Publish Story";
+
+        return;
+    }
+
+
+    alert(
+        editingStoryId
+            ? "Story updated successfully."
+            : (
+                published
+                    ? "Story published successfully."
+                    : "Story saved as draft."
+            )
+    );
+
+
+    resetForm();
+
+    await loadEverything();
+
+}
+
+
+// ============================================
+// LOAD STORIES
+// ============================================
+
+async function loadStories() {
+
+    storiesContainer.innerHTML =
+        "<p>Loading stories...</p>";
+
+
+    const {
+        data: stories,
+        error
+    } = await supabaseClient
+        .from("stories")
+        .select(
+            "id,title,content,image_url,published,featured,created_at"
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "LOAD STORIES ERROR:",
+            error
+        );
+
+
+        storiesContainer.innerHTML = `
+
+            <div class="admin-error">
+
+                <h3>
+                    Could not load stories
+                </h3>
+
+                <p>
+                    ${escapeHtml(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    if (!stories || stories.length === 0) {
+
+        storiesContainer.innerHTML = `
+
+            <div class="admin-empty">
+
+                <h3>
+                    No stories found
+                </h3>
+
+                <p>
+                    There are currently no stories.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    storiesContainer.innerHTML = "";
+
+
+    stories.forEach(story => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "story-card";
+
+
+        const status =
+            story.published
+                ? "Published"
+                : "Draft";
+
+
+        const featured =
+            story.featured
+                ? "Featured"
+                : "Not Featured";
+
+
+        const date =
+            story.created_at
+                ? new Date(
+                    story.created_at
+                ).toLocaleDateString()
+                : "";
+
+
+        let imageHtml = "";
+
+
+        if (story.image_url) {
+
+            imageHtml = `
+
+                <div class="story-image">
+
+                    <img
+                        src="${escapeHtml(
+                            story.image_url
+                        )}"
+                        alt="${escapeHtml(
+                            story.title
+                        )}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                </div>
+
+            `;
+        }
+
+
+        card.innerHTML = `
+
+            ${imageHtml}
+
+            <div class="featured-content">
+
+                <h3>
+                    ${escapeHtml(
+                        story.title
+                    )}
+                </h3>
+
+
+                <p>
+
+                    <strong>
+                        Status:
+                    </strong>
+
+                    ${status}
+
+                    &nbsp; | &nbsp;
+
+                    <strong>
+                        ${featured}
+                    </strong>
+
+                </p>
+
+
+                <p>
+                    ${escapeHtml(
+                        getPreviewText(
+                            story.content,
+                            220
+                        )
+                    )}
+                </p>
+
+
+                <small>
+                    Created:
+                    ${escapeHtml(date)}
+                </small>
+
+
+                <div class="admin-buttons">
+
+                    <button
+                        type="button"
+                        onclick="editStory(
+                            '${story.id}'
+                        )"
+                    >
+                        Edit
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="togglePublish(
+                            '${story.id}',
+                            ${story.published}
+                        )"
+                    >
+                        ${
+                            story.published
+                                ? "Unpublish"
+                                : "Publish"
+                        }
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="setFeatured(
+                            '${story.id}',
+                            ${story.featured === true}
+                        )"
+                    >
+                        ${
+                            story.featured
+                                ? "Unfeature"
+                                : "Feature"
+                        }
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="deleteStory(
+                            '${story.id}'
+                        )"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        storiesContainer.appendChild(card);
+
+    });
+}
+
+
+// ============================================
+// TEXT PREVIEW
+// ============================================
+
+function getPreviewText(
+    text,
+    maxLength
+) {
+
+    if (!text) {
+        return "";
+    }
+
+
+    const clean =
+        String(text)
+            .replace(/\s+/g, " ")
+            .trim();
+
+
+    if (clean.length <= maxLength) {
+        return clean;
+    }
+
+
+    return (
+        clean.substring(
+            0,
+            maxLength
+        ) + "..."
+    );
+}
+
+
+// ============================================
+// EDIT STORY
+// ============================================
+
+async function editStory(id) {
+
+    const {
+        data: story,
+        error
+    } = await supabaseClient
+        .from("stories")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+
+    if (error) {
+
+        console.error(
+            "Edit story error:",
+            error
+        );
+
+        alert(
+            "Could not load story:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    editingStoryId = id;
+
+
+    titleInput.value =
+        story.title || "";
+
+    contentInput.value =
+        story.content || "";
+
+    imageUrlInput.value =
+        story.image_url || "";
+
+    publishedInput.checked =
+        story.published === true;
+
+
+    formTitle.textContent =
+        "Edit Story";
+
+    saveButton.textContent =
+        "Update Story";
+
+    cancelButton.style.display =
+        "inline-block";
+
+
+    updateImagePreview();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+// ============================================
+// RESET FORM
+// ============================================
+
+function resetForm() {
+
+    editingStoryId = null;
+
+
+    titleInput.value = "";
+
+    contentInput.value = "";
+
+    imageUrlInput.value = "";
+
+    publishedInput.checked = false;
+
+
+    formTitle.textContent =
+        "Create New Story";
+
+    saveButton.textContent =
+        "Publish Story";
+
+    cancelButton.style.display =
+        "none";
+
+
+    imagePreview.innerHTML = "";
+}
+
+
+// ============================================
+// PUBLISH / UNPUBLISH
+// ============================================
+
+async function togglePublish(
+    id,
+    currentStatus
+) {
+
+    const {
+        error
+    } = await supabaseClient
+        .from("stories")
+        .update({
+            published: !currentStatus
+        })
+        .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "Publish error:",
+            error
+        );
+
+        alert(
+            "Could not update story:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await loadEverything();
+}
+// ============================================
+// FEATURE / UNFEATURE
+// ============================================
+
+async function setFeatured(
+    id,
+    currentStatus
+) {
+
+    const {
+        error
+    } = await supabaseClient
+        .from("stories")
+        .update({
+            featured: !currentStatus
+        })
+        .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "Featured error:",
+            error
+        );
+
+        alert(
+            "Could not update featured status:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await loadEverything();
+}
+
+
+// ============================================
+// DELETE STORY
+// ============================================
+
+async function deleteStory(id) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this story?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("stories")
+        .delete()
+        .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "Delete story error:",
+            error
+        );
+
+        alert(
+            "Could not delete story:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    if (editingStoryId === id) {
+        resetForm();
+    }
+
+
+    await loadEverything();
+}
+
+
+// ============================================
+// UPDATE STAT
+// ============================================
+
+function updateStat(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (element) {
+
+        element.textContent =
+            value ?? 0;
+    }
+}
+
+
+// ============================================
+// LOAD DASHBOARD STATS
+// ============================================
+
+async function loadDashboardStats() {
+
+    console.log(
+        "Loading dashboard statistics..."
+    );
+
+
+    // TOTAL STORIES
+    const {
+        count: totalStories,
+        error: storiesError
+    } = await supabaseClient
+        .from("stories")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+    if (storiesError) {
+
+        console.error(
+            "Total stories error:",
+            storiesError
+        );
+
+    } else {
+
+        updateStat(
+            "total-stories",
+            totalStories
+        );
+    }
+
+
+    // PUBLISHED STORIES
+    const {
+        count: publishedStories,
+        error: publishedError
+    } = await supabaseClient
+        .from("stories")
+        .select("*", {
+            count: "exact",
+            head: true
+        })
+        .eq(
+            "published",
+            true
+        );
+
+
+    if (publishedError) {
+
+        console.error(
+            "Published stories error:",
+            publishedError
+        );
+
+    } else {
+
+        updateStat(
+            "published-stories",
+            publishedStories
+        );
+    }
+
+
+    // DRAFT STORIES
+    const {
+        count: draftStories,
+        error: draftError
+    } = await supabaseClient
+        .from("stories")
+        .select("*", {
+            count: "exact",
+            head: true
+        })
+        .eq(
+            "published",
+            false
+        );
+
+
+    if (draftError) {
+
+        console.error(
+            "Draft stories error:",
+            draftError
+        );
+
+    } else {
+
+        updateStat(
+            "draft-stories",
+            draftStories
+        );
+    }
+
+
+    // TOTAL LIKES
+    const {
+        count: totalLikes,
+        error: likesError
+    } = await supabaseClient
+        .from("story_likes")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+    if (likesError) {
+
+        console.error(
+            "Likes error:",
+            likesError
+        );
+
+    } else {
+
+        updateStat(
+            "total-likes",
+            totalLikes
+        );
+    }
+
+
+    // TOTAL COMMENTS
+    const {
+        count: totalComments,
+        error: commentsError
+    } = await supabaseClient
+        .from("story_comments")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+    if (commentsError) {
+
+        console.error(
+            "Comments error:",
+            commentsError
+        );
+
+    } else {
+
+        updateStat(
+            "total-comments",
+            totalComments
+        );
+    }
+
+
+    // TOTAL USERS
+    const {
+        data: totalUsers,
+        error: usersError
+    } = await supabaseClient
+        .rpc("admin_user_count");
+
+
+    if (usersError) {
+
+        console.error(
+            "Users count error:",
+            usersError
+        );
+
+    } else {
+
+        updateStat(
+            "total-users",
+            totalUsers
+        );
+    }
+
+
+    // TOTAL VISITS
+    const {
+        count: totalVisits,
+        error: visitsError
+    } = await supabaseClient
+        .from("site_visits")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+    if (visitsError) {
+
+        console.error(
+            "Visits error:",
+            visitsError
+        );
+
+    } else {
+
+        updateStat(
+            "total-visits",
+            totalVisits
+        );
+    }
+
+
+    console.log(
+        "Dashboard statistics loaded."
+    );
+}
+
+
+// ============================================
+// LOAD EVERYTHING
+// ============================================
+
+async function loadEverything() {
+
+    await Promise.all([
+        loadStories(),
+        loadDashboardStats()
+    ]);
+}
+
+
+// ============================================
+// FORM EVENTS
+// ============================================
+
+storyForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        await saveStory();
+    }
+);
+
+
+cancelButton.addEventListener(
+    "click",
+    function() {
+
+        resetForm();
+    }
+);
+
+
+imageUrlInput.addEventListener(
+    "input",
+    function() {
+
+        updateImagePreview();
+    }
+);
+
+
+// ============================================
+// LOGOUT
+// ============================================
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const confirmed =
+                confirm(
+                    "Do you want to logout?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            const {
+                error
+            } = await supabaseClient
+                .auth
+                .signOut();
+
+
+            if (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+                alert(
+                    "Could not logout."
+                );
+
+                return;
+            }
+
+
+            location.href =
+                "signin.html";
+        }
+    );
+
+
+// ============================================
+// START ADMIN
+// ============================================
+
+async function startAdmin() {
+
+    console.log(
+        "Starting admin dashboard..."
+    );
+
+
+    const allowed =
+        await checkAdmin();
+
+
+    if (!allowed) {
+        return;
+    }
+
+
+    await loadEverything();
+}
+
+
+startAdmin();
+
+</script>
+
+
+<script src="dark-mode.js"></script>
+
+<script src="auth-nav.js"></script>
+
+
+</body>
+
+</html>

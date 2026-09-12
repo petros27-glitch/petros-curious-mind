@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Stories | Petros Curious Mind</title>
+    <link rel="canonical" href="https://YOUR-DOMAIN.com/story.html">
+    <meta name="description"
+      content="Petros Curious Mind — The Story Behind Every Story. Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+
+<meta name="robots"
+      content="index, follow">
+
+<meta name="author"
+      content="Petros Curious Mind">
+
+<meta property="og:title"
+      content="Petros Curious Mind — The Story Behind Every Story">
+
+<meta property="og:description"
+      content="Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:image"
+      content="images/logo.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     READING PROGRESS BAR
+========================= -->
+
+<div id="reading-progress"></div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="brand">
+
+        <h1>Petros Curious Mind</h1>
+
+        <img
+            src="images/logo.png"
+            alt="Petros Curious Mind logo"
+        >
+
+    </div>
+
+    <p>The Story Behind Every Story</p>
+
+</header>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="navbar">
+
+    <a href="index.html">
+        Home
+    </a>
+
+    <a
+        href="story.html"
+        class="active"
+    >
+        Stories
+    </a>
+
+    <a href="about.html">
+        About
+    </a>
+
+    <a href="contact.html">
+        Contact
+    </a>
+
+    <button
+        type="button"
+        id="dark-mode-toggle"
+    >
+        🌙 Dark Mode
+    </button>
+
+    <a
+        href="signin.html"
+        id="account-link"
+    >
+        Sign In
+    </a>
+
+</nav>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main>
+
+    <section class="stories">
+
+
+        <!-- =========================
+             PAGE HEADING
+        ========================= -->
+
+        <div class="stories-heading">
+
+            <h2>
+                Explore Stories
+            </h2>
+
+            <p id="stories-count">
+                Discover stories that make you curious.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             STORY SEARCH
+        ========================= -->
+
+        <div class="story-search">
+
+            <input
+                type="text"
+                id="search-input"
+                placeholder="🔍 Search stories..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH MESSAGE
+        ========================= -->
+
+        <p
+            id="search-message"
+            style="text-align:center;"
+        ></p>
+
+
+        <!-- =========================
+             STORIES CONTAINER
+        ========================= -->
+
+        <div id="stories-container">
+
+            <p style="text-align:center;">
+                Loading stories...
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             LOAD MORE
+        ========================= -->
+
+        <div
+            class="load-more-section"
+            id="load-more-section"
+        >
+
+            <button
+                type="button"
+                id="load-more-button"
+            >
+                Load More Stories
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 Petros Curious Mind.
+        All rights reserved.
+    </p>
+
+    <p>
+        The Story Behind Every Story
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     BACK TO TOP BUTTON
+========================= -->
+
+<button
+    id="back-to-top"
+    type="button"
+    aria-label="Back to top"
+>
+    ↑
+</button>
+
+
+<!-- =========================
+     MAIN JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let allStories = [];
+
+let filteredStories = [];
+
+let visibleStories = 5;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const storiesContainer =
+    document.getElementById(
+        "stories-container"
+    );
+
+
+const searchInput =
+    document.getElementById(
+        "search-input"
+    );
+
+
+const searchMessage =
+    document.getElementById(
+        "search-message"
+    );
+
+
+const loadMoreButton =
+    document.getElementById(
+        "load-more-button"
+    );
+
+
+const loadMoreSection =
+    document.getElementById(
+        "load-more-section"
+    );
+
+
+const storiesCount =
+    document.getElementById(
+        "stories-count"
+    );
+
+
+/* =========================
+   LOAD STORIES
+========================= */
+
+async function loadStories() {
+
+    storiesContainer.innerHTML = `
+
+        <p style="text-align:center;">
+            Loading stories...
+        </p>
+
+    `;
+
+
+    try {
+
+        const {
+            data: stories,
+            error
+        } = await supabaseClient
+            .from("stories")
+            .select("*")
+            .eq(
+                "published",
+                true
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            console.log(
+                "Stories error:",
+                error.message
+            );
+
+
+            storiesContainer.innerHTML = `
+
+                <p style="text-align:center;">
+                    Unable to load stories.
+                </p>
+
+            `;
+
+
+            loadMoreSection.style.display =
+                "none";
+
+
+            return;
+
+        }
+
+
+        if (
+            !stories ||
+            stories.length === 0
+        ) {
+
+            storiesContainer.innerHTML = `
+
+                <p style="text-align:center;">
+                    No published stories yet.
+                </p>
+
+            `;
+
+
+            storiesCount.textContent =
+                "No stories available yet.";
+
+
+            loadMoreSection.style.display =
+                "none";
+
+
+            return;
+
+        }
+
+
+        /* SAVE STORIES */
+
+        allStories =
+            stories;
+
+
+        filteredStories =
+            stories;
+
+
+        visibleStories =
+            5;
+
+
+        /* STORY COUNT */
+
+        storiesCount.textContent =
+            `${stories.length} ${
+                stories.length === 1
+                    ? "story"
+                    : "stories"
+            } available to explore.`;
+
+
+        /* DISPLAY STORIES */
+
+        displayStories();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Unexpected stories error:",
+            error
+        );
+
+
+        storiesContainer.innerHTML = `
+
+            <p style="text-align:center;">
+                Unable to load stories.
+            </p>
+
+        `;
+
+
+        loadMoreSection.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================
+   DISPLAY STORIES
+========================= */
+
+function displayStories() {
+
+    storiesContainer.innerHTML =
+        "";
+
+
+    const storiesToShow =
+        filteredStories.slice(
+            0,
+            visibleStories
+        );
+
+
+    if (
+        storiesToShow.length === 0
+    ) {
+
+        storiesContainer.innerHTML = `
+
+            <p style="text-align:center;">
+                No stories found.
+            </p>
+
+        `;
+
+
+        loadMoreSection.style.display =
+            "none";
+
+
+        return;
+
+    }
+
+
+    storiesToShow.forEach(
+        function(story) {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "story-card";
+
+
+            /* =========================
+               STORY IMAGE
+            ========================= */
+
+            let imageHTML = "";
+
+
+            if (story.image_url) {
+
+                imageHTML = `
+
+                    <div class="story-image">
+
+                        <img
+                            src="${escapeHtml(
+                                story.image_url
+                            )}"
+                            alt="${escapeHtml(
+                                story.title
+                            )}"
+                        >
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =========================
+               STORY PREVIEW
+            ========================= */
+
+            const preview =
+                story.content.length > 300
+                ? story.content.substring(
+                    0,
+                    300
+                ) + "..."
+                : story.content;
+
+
+            const formattedPreview =
+                escapeHtml(
+                    preview
+                ).replace(
+                    /\n/g,
+                    "<br>"
+                );
+
+
+            /* =========================
+               READING TIME
+            ========================= */
+
+            const wordCount =
+                story.content
+                .trim()
+                .split(/\s+/)
+                .filter(
+                    word => word.length > 0
+                )
+                .length;
+
+
+            const readingMinutes =
+                Math.max(
+                    1,
+                    Math.ceil(
+                        wordCount / 200
+                    )
+                );
+
+
+            /* =========================
+               PUBLISHED DATE
+            ========================= */
+
+            let formattedDate =
+                "Recently published";
+
+
+            if (story.created_at) {
+
+                formattedDate =
+                    new Date(
+                        story.created_at
+                    ).toLocaleDateString(
+                        undefined,
+                        {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric"
+                        }
+                    );
+
+            }
+
+
+            /* =========================
+               STORY CARD
+            ========================= */
+
+            card.innerHTML = `
+
+                ${imageHTML}
+
+
+                <div class="story-content">
+
+
+                    <h3>
+
+                        ${escapeHtml(
+                            story.title
+                        )}
+
+                    </h3>
+
+
+                    <!-- STORY META -->
+
+                    <div class="story-card-meta">
+
+                        <span>
+                            📅 ${formattedDate}
+                        </span>
+
+                        <span>
+                            📖 ${readingMinutes} min read
+                        </span>
+
+                    </div>
+
+
+                    <!-- STORY PREVIEW -->
+
+                    <p>
+
+                        ${formattedPreview}
+
+                    </p>
+
+
+                    <!-- READ BUTTON -->
+
+                    <a
+                        href="read.html?id=${story.id}"
+                        class="read-button"
+                    >
+                        Read Story →
+                    </a>
+
+
+                </div>
+
+            `;
+
+
+            storiesContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    /* =========================
+       LOAD MORE VISIBILITY
+    ========================= */
+
+    if (
+        visibleStories >=
+        filteredStories.length
+    ) {
+
+        loadMoreSection.style.display =
+            "none";
+
+    }
+
+    else {
+
+        loadMoreSection.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD MORE STORIES
+========================= */
+
+loadMoreButton.addEventListener(
+    "click",
+    function() {
+
+        visibleStories += 5;
+
+        displayStories();
+
+    }
+);
+
+
+/* =========================
+   SEARCH STORIES
+========================= */
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+
+        const searchTerm =
+            searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+        visibleStories =
+            5;
+
+
+        /* EMPTY SEARCH */
+
+        if (
+            searchTerm === ""
+        ) {
+
+            searchMessage.textContent =
+                "";
+
+
+            filteredStories =
+                allStories;
+
+
+            displayStories();
+
+            return;
+
+        }
+
+
+        /* FILTER STORIES */
+
+        filteredStories =
+            allStories.filter(
+                function(story) {
+
+
+                    const title =
+                        (
+                            story.title || ""
+                        )
+                        .toLowerCase();
+
+
+                    const content =
+                        (
+                            story.content || ""
+                        )
+                        .toLowerCase();
+
+
+                    return (
+
+                        title.includes(
+                            searchTerm
+                        )
+
+                        ||
+
+                        content.includes(
+                            searchTerm
+                        )
+
+                    );
+
+                }
+            );
+
+
+        /* SEARCH RESULT MESSAGE */
+
+        if (
+            filteredStories.length === 1
+        ) {
+
+            searchMessage.textContent =
+                "1 story found.";
+
+        }
+
+        else {
+
+            searchMessage.textContent =
+                `${filteredStories.length} stories found.`;
+
+        }
+
+
+        displayStories();
+
+    }
+);
+
+
+/* =========================
+   HTML SAFETY
+========================= */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text || "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   START STORIES PAGE
+========================= */
+
+loadStories();
+
+
+</script>
+
+
+<!-- =========================
+     AUTH NAVIGATION
+========================= -->
+
+<script src="auth-nav.js"></script>
+
+
+<!-- =========================
+     BACK TO TOP
+========================= -->
+
+<script>
+
+const backToTop =
+    document.getElementById(
+        "back-to-top"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+
+        if (
+            window.scrollY > 400
+        ) {
+
+            backToTop.style.display =
+                "block";
+
+        }
+
+        else {
+
+            backToTop.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+backToTop.addEventListener(
+    "click",
+    function() {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+);
+
+</script>
+
+
+<!-- =========================
+     DARK MODE
+========================= -->
+
+<script>
+
+const darkModeButton =
+    document.getElementById(
+        "dark-mode-toggle"
+    );
+
+
+if (
+    localStorage.getItem(
+        "darkMode"
+    ) === "enabled"
+) {
+
+    document.body.classList.add(
+        "dark-mode"
+    );
+
+
+    if (darkModeButton) {
+
+        darkModeButton.textContent =
+            "☀️ Light Mode";
+
+    }
+
+}
+
+
+if (darkModeButton) {
+
+    darkModeButton.addEventListener(
+        "click",
+        function() {
+
+
+            document.body.classList.toggle(
+                "dark-mode"
+            );
+
+
+            if (
+                document.body.classList.contains(
+                    "dark-mode"
+                )
+            ) {
+
+                localStorage.setItem(
+                    "darkMode",
+                    "enabled"
+                );
+
+
+                darkModeButton.textContent =
+                    "☀️ Light Mode";
+
+            }
+
+            else {
+
+                localStorage.setItem(
+                    "darkMode",
+                    "disabled"
+                );
+
+
+                darkModeButton.textContent =
+                    "🌙 Dark Mode";
+
+            }
+
+        }
+    );
+
+}
+
+</script>
+
+
+<!-- =========================
+     READING PROGRESS BAR
+========================= -->
+
+<script>
+
+const readingProgress =
+    document.getElementById(
+        "reading-progress"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+
+        const scrollTop =
+            window.scrollY;
+
+
+        const documentHeight =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+
+        const progress =
+            documentHeight > 0
+                ? (
+                    scrollTop /
+                    documentHeight
+                ) * 100
+                : 0;
+
+
+        readingProgress.style.width =
+            progress + "%";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account | Petros Curious Mind</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <h1>Petros Curious Mind</h1>
+        <img src="images/logo.png" alt="Petros Curious Mind logo">
+    </div>
+
+    <p>The Story Behind Every Story</p>
+</header>
+
+
+<nav class="navbar">
+
+    <a href="index.html">Home</a>
+
+    <a href="story.html">Stories</a>
+
+    <a href="about.html">About</a>
+
+    <a href="contact.html">Contact</a>
+
+    <button
+        type="button"
+        id="dark-mode-toggle"
+    >
+        🌙 Dark Mode
+    </button>
+
+    <a
+        href="signin.html"
+        id="account-link"
+    >
+        Sign In
+    </a>
+
+</nav>
+
+
+<main>
+
+    <section class="signup-box">
+
+        <h2>My Account</h2>
+
+        <div id="account-info">
+            <p>Loading your account...</p>
+        </div>
+
+        <button id="logout-button">
+            Sign Out
+        </button>
+
+    </section>
+
+</main>
+
+
+<script>
+
+async function loadAccount() {
+
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
+
+    if (!user) {
+
+        window.location.href = "signin.html";
+
+        return;
+
+    }
+
+
+    const {
+        data: profile,
+        error
+    } = await supabaseClient
+        .from("profiles")
+        .select("name, age, is_admin")
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    if (error) {
+
+        document.getElementById("account-info").innerHTML =
+            "<p>Error loading account.</p>";
+
+        return;
+
+    }
+
+
+    if (!profile) {
+
+        document.getElementById("account-info").innerHTML =
+            "<p>Profile not found.</p>";
+
+        return;
+
+    }
+
+
+    if (profile.is_admin === true) {
+
+        window.location.href = "admin.html";
+
+        return;
+
+    }
+
+
+    document.getElementById("account-info").innerHTML = `
+        <p><strong>Name:</strong> ${escapeHtml(profile.name || "Not available")}</p>
+
+        <p><strong>Email:</strong> ${escapeHtml(user.email)}</p>
+
+        <p><strong>Age:</strong> ${escapeHtml(String(profile.age || "Not available"))}</p>
+    `;
+
+}
+
+
+function escapeHtml(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+document
+    .getElementById("logout-button")
+    .addEventListener("click", async function() {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html";
+
+    });
+
+
+loadAccount();
+
+</script>
+<script src="dark-mode.js"></script>
+</body>
+
+</html>

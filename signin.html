@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In | Petros Curious Mind</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="brand">
+
+            <h1>Petros Curious Mind</h1>
+
+            <img
+                src="images/logo.png"
+                alt="Petros Curious Mind logo"
+            >
+
+        </div>
+
+        <p>The Story Behind Every Story</p>
+
+    </header>
+
+
+<nav class="navbar">
+
+    <a href="index.html">Home</a>
+
+    <a href="story.html">Stories</a>
+
+    <a href="about.html">About</a>
+
+    <a href="contact.html">Contact</a>
+
+    <button
+        type="button"
+        id="dark-mode-toggle"
+    >
+        🌙 Dark Mode
+    </button>
+
+    <a
+        href="signin.html"
+        id="account-link"
+    >
+        Sign In
+    </a>
+
+</nav>
+
+
+    <main>
+
+        <section class="signup-box">
+
+            <h2>Sign In</h2>
+
+            <form id="signin-form">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+
+                <button type="submit">
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <p>
+                Don't have an account?
+                <a href="signup.html">
+                    Sign Up
+                </a>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const signinForm =
+            document.getElementById("signin-form");
+
+
+        signinForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const {
+                    data,
+                    error
+                } = await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+                if (error) {
+
+                    alert(error.message);
+
+                    return;
+
+                }
+
+
+                if (!data.user) {
+
+                    alert(
+                        "Sign in failed. Please try again."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                 * Check whether this user is an administrator.
+                 */
+
+                const {
+                    data: profile,
+                    error: profileError
+                } = await supabaseClient
+                    .from("profiles")
+                    .select("is_admin")
+                    .eq("id", data.user.id)
+                    .maybeSingle();
+
+
+                if (profileError) {
+
+                    alert(
+                        "Profile check error: " +
+                        profileError.message
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "You're now signed in!"
+                );
+
+
+                /*
+                 * Send administrators to the
+                 * Admin Dashboard.
+                 */
+
+                if (
+                    profile &&
+                    profile.is_admin === true
+                ) {
+
+                    window.location.href =
+                        "admin.html";
+
+                } else {
+
+                    /*
+                     * Normal users go to the homepage.
+                     */
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
+        );
+
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth-nav.js"></script>
+<script src="dark-mode.js"></script>
+</body>
+
+</html>

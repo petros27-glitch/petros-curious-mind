@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Read Story - Petros Curious Mind</title>
+    <meta name="description"
+      content="Petros Curious Mind — The Story Behind Every Story. Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+
+<meta name="robots"
+      content="index, follow">
+
+<meta name="author"
+      content="Petros Curious Mind">
+
+<meta property="og:title"
+      content="Petros Curious Mind — The Story Behind Every Story">
+
+<meta property="og:description"
+      content="Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:image"
+      content="images/logo.png">
+
+    <meta name="description"
+        content="Read stories on Petros Curious Mind - The Story Behind Every Story.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+
+        .story-reader {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .story-article {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .story-title {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .story-meta {
+            text-align: center;
+            color: #777;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .story-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+        }
+
+        .story-content {
+            font-size: 18px;
+            line-height: 1.9;
+        }
+
+        .story-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .like-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .like-button {
+            border: none;
+            background: #0088ff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .like-count {
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        .share-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .share-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 9px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .comments-section {
+            margin-top: 30px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .comment-form button {
+            margin-top: 10px;
+            background: #0088ff;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .comment {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comment-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .comment-date {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .comment-text {
+            line-height: 1.6;
+        }
+
+        .delete-comment {
+            background: none;
+            border: none;
+            color: #d00;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .back-stories {
+            display: inline-block;
+            margin-top: 30px;
+            color: #0088ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+
+            .story-reader {
+                padding: 0 12px;
+            }
+
+            .story-article {
+                padding: 20px 15px;
+            }
+
+            .story-title {
+                font-size: 28px;
+            }
+
+            .story-content {
+                font-size: 17px;
+            }
+
+        }
+
+        body.dark-mode .story-article {
+            background: #1c1c1c;
+        }
+
+        body.dark-mode .story-meta {
+            color: #aaa;
+        }
+
+        body.dark-mode .story-content {
+            color: #eee;
+        }
+
+        body.dark-mode .story-actions {
+            border-color: #444;
+        }
+
+        body.dark-mode .comment {
+            border-color: #444;
+        }
+
+        body.dark-mode .comment-date {
+            color: #aaa;
+        }
+
+        body.dark-mode .comment-form textarea {
+            background: #222;
+            color: white;
+            border-color: #555;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="reading-progress"></div>
+
+    <header>
+
+        <div class="brand">
+
+            <img
+                src="images/logo.png"
+                alt="Petros Curious Mind Logo"
+            >
+
+            <h1>Petros Curious Mind</h1>
+
+        </div>
+
+        <nav class="navbar">
+
+            <a href="index.html">Home</a>
+
+            <a href="story.html" class="active">Stories</a>
+
+            <a href="about.html">About</a>
+
+            <a href="contact.html">Contact</a>
+
+            <button id="dark-mode-toggle" type="button">
+                🌙
+            </button>
+
+            <a href="signin.html" id="account-link">
+                Sign In
+            </a>
+
+        </nav>
+
+    </header>
+
+    <main class="story-reader">
+
+        <article class="story-article">
+
+            <h1 id="story-title" class="story-title">
+                Loading story...
+            </h1>
+
+            <div id="story-meta" class="story-meta">
+
+                <span id="story-date"></span>
+
+                <span id="reading-time"></span>
+
+            </div>
+
+            <img
+                id="story-image"
+                class="story-image"
+                src=""
+                alt="Story image"
+                style="display:none;"
+            >
+
+            <div id="story-content" class="story-content">
+                Loading story...
+            </div>
+
+            <div class="story-actions">
+
+                <div class="like-section">
+
+                    <button
+                        id="like-button"
+                        class="like-button"
+                        type="button"
+                    >
+                        ❤️ Like
+                    </button>
+
+                    <span id="like-count" class="like-count">
+                        0
+                    </span>
+
+                    <p id="like-message"></p>
+
+                </div>
+
+                <div class="share-section">
+
+                    <h3>Share this story</h3>
+
+                    <a
+                        id="whatsapp-share"
+                        class="share-button"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        WhatsApp
+                    </a>
+
+                    <a
+                        id="facebook-share"
+                        class="share-button"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Facebook
+                    </a>
+
+                    <a
+                        id="x-share"
+                        class="share-button"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        X
+                    </a>
+
+                    <button
+                        id="copy-link"
+                        class="share-button"
+                        type="button"
+                    >
+                        Copy Link
+                    </button>
+
+                    <p id="share-message"></p>
+
+                </div>
+
+                <section class="comments-section">
+
+                    <h2>Comments</h2>
+
+                    <form
+                        id="comment-form"
+                        class="comment-form"
+                    >
+
+                        <textarea
+                            id="comment-input"
+                            maxlength="2000"
+                            placeholder="Write a comment..."
+                            required
+                        ></textarea>
+
+                        <button type="submit">
+                            Post Comment
+                        </button>
+
+                    </form>
+
+                    <p id="comment-message"></p>
+
+                    <div id="comments-container">
+                        Loading comments...
+                    </div>
+
+                </section>
+
+            </div>
+
+            <a
+                href="story.html"
+                class="back-stories"
+            >
+                ← Back to Stories
+            </a>
+
+        </article>
+
+    </main>
+
+    <button id="back-to-top" type="button">
+        ↑
+    </button>
+
+    <footer>
+
+        <p>
+            © 2026 Petros Curious Mind.
+            The Story Behind Every Story.
+        </p>
+            <p>
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="terms.html">Terms & Conditions</a> |
+        <a href="cookies.html">Cookies & Advertising</a> |
+        <a href="contact.html">Contact</a>
+    </p>
+
+    </footer>
+
+
+<script>
+
+    let currentStoryId = null;
+    let currentUser = null;
+
+
+    const storyTitle =
+        document.getElementById("story-title");
+
+    const storyDate =
+        document.getElementById("story-date");
+
+    const readingTime =
+        document.getElementById("reading-time");
+
+    const storyImage =
+        document.getElementById("story-image");
+
+    const storyContent =
+        document.getElementById("story-content");
+
+    const likeButton =
+        document.getElementById("like-button");
+
+    const likeCount =
+        document.getElementById("like-count");
+
+    const likeMessage =
+        document.getElementById("like-message");
+
+    const commentForm =
+        document.getElementById("comment-form");
+
+    const commentInput =
+        document.getElementById("comment-input");
+
+    const commentMessage =
+        document.getElementById("comment-message");
+
+    const commentsContainer =
+        document.getElementById("comments-container");
+
+    const copyLinkButton =
+        document.getElementById("copy-link");
+
+    const shareMessage =
+        document.getElementById("share-message");
+
+
+    function escapeHtml(text) {
+
+        if (
+            text === null ||
+            text === undefined
+        ) {
+            return "";
+        }
+
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    function getStoryId() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return params.get("id");
+
+    }
+
+
+    async function loadUser() {
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getUser();
+
+
+            if (error) {
+
+                console.error(
+                    "User error:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            currentUser =
+                data.user || null;
+
+        } catch (error) {
+
+            console.error(
+                "Could not load user:",
+                error
+            );
+
+        }
+
+    }
+
+
+async function loadStory() {
+
+    currentStoryId = getStoryId();
+
+
+    if (!currentStoryId) {
+
+        storyTitle.textContent =
+            "Story not found";
+
+        storyContent.textContent =
+            "No story ID was provided.";
+
+        return false;
+
+    }
+
+
+    try {
+
+        const {
+            data: story,
+            error
+        } =
+            await supabaseClient
+                .from("stories")
+                .select("*")
+                .eq(
+                    "id",
+                    currentStoryId
+                )
+                .eq(
+                    "published",
+                    true
+                )
+                .maybeSingle();
+
+
+        if (error) {
+
+            console.error(
+                "Story error:",
+                error
+            );
+
+            storyTitle.textContent =
+                "Unable to load story";
+
+            storyContent.textContent =
+                "There was a problem loading this story.";
+
+            return false;
+
+        }
+
+
+        if (!story) {
+
+            storyTitle.textContent =
+                "Story not found";
+
+            storyContent.textContent =
+                "This story may have been removed or is not published.";
+
+            return false;
+
+        }
+
+
+        // =============================
+        // STORY TITLE
+        // =============================
+
+        storyTitle.textContent =
+            story.title ||
+            "Untitled Story";
+
+
+        // =============================
+        // SEO
+        // =============================
+
+        document.title =
+            `${story.title || "Story"} — Petros Curious Mind`;
+
+
+        const descriptionMeta =
+            document.querySelector(
+                'meta[name="description"]'
+            );
+
+
+        if (descriptionMeta) {
+
+            descriptionMeta.setAttribute(
+                "content",
+                `${story.title || "Story"} — Read this fascinating story on Petros Curious Mind.`
+            );
+
+        }
+
+
+        const ogImage =
+            document.querySelector(
+                'meta[property="og:image"]'
+            );
+
+
+        if (
+            ogImage &&
+            story.image_url
+        ) {
+
+            ogImage.setAttribute(
+                "content",
+                story.image_url
+            );
+
+        }
+
+
+        const twitterImage =
+            document.querySelector(
+                'meta[name="twitter:image"]'
+            );
+
+
+        if (
+            twitterImage &&
+            story.image_url
+        ) {
+
+            twitterImage.setAttribute(
+                "content",
+                story.image_url
+            );
+
+        }
+
+
+        // =============================
+        // DATE
+        // =============================
+
+        if (story.created_at) {
+
+            storyDate.textContent =
+                "Published " +
+                new Date(
+                    story.created_at
+                ).toLocaleDateString();
+
+        }
+
+
+        // =============================
+        // CONTENT
+        // =============================
+
+        const content =
+            story.content || "";
+
+
+        storyContent.innerHTML =
+            escapeHtml(content)
+                .replace(
+                    /\n\n+/g,
+                    "<br><br>"
+                )
+                .replace(
+                    /\n/g,
+                    "<br>"
+                );
+
+
+        // =============================
+        // READING TIME
+        // =============================
+
+        const words =
+            content.trim()
+                ? content.trim()
+                    .split(/\s+/)
+                    .length
+                : 0;
+
+
+        const minutes =
+            Math.max(
+                1,
+                Math.ceil(
+                    words / 200
+                )
+            );
+
+
+        readingTime.textContent =
+            " • " +
+            minutes +
+            " min read";
+
+
+        // =============================
+        // STORY IMAGE
+        // =============================
+
+        if (story.image_url) {
+
+            if (story.image_url) {
+    storyImage.src = story.image_url;
+    storyImage.loading = "eager";
+    storyImage.decoding = "async";
+    storyImage.fetchPriority = "high";
+} else {
+    storyImage.style.display = "none";
+}
+
+            storyImage.alt =
+                story.title ||
+                "Story image";
+
+            storyImage.style.display =
+                "block";
+
+
+            storyImage.onerror =
+                function() {
+
+                    storyImage.style.display =
+                        "none";
+
+                };
+
+        } else {
+
+            storyImage.style.display =
+                "none";
+
+        }
+
+
+        // =============================
+        // SHARE LINKS
+        // =============================
+
+        setupShareLinks(
+            story.title ||
+            "Petros Curious Mind"
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected story error:",
+            error
+        );
+
+
+        storyTitle.textContent =
+            "Unable to load story";
+
+
+        storyContent.textContent =
+            "An unexpected error occurred while loading the story.";
+
+
+        return false;
+
+    }
+
+}
+
+
+    async function loadLikes() {
+
+        if (!currentStoryId) return;
+
+
+        try {
+
+            const {
+                count,
+                error
+            } =
+                await supabaseClient
+                    .from("story_likes")
+                    .select("*", {
+                        count: "exact",
+                        head: true
+                    })
+                    .eq(
+                        "story_id",
+                        currentStoryId
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Like count error:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            likeCount.textContent =
+                count || 0;
+
+
+            if (!currentUser) {
+
+                likeButton.textContent =
+                    "❤️ Like";
+
+                return;
+
+            }
+
+
+            const {
+                data: existingLike
+            } =
+                await supabaseClient
+                    .from("story_likes")
+                    .select("id")
+                    .eq(
+                        "story_id",
+                        currentStoryId
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    )
+                    .maybeSingle();
+
+
+            if (existingLike) {
+
+                likeButton.textContent =
+                    "💙 Liked";
+
+            } else {
+
+                likeButton.textContent =
+                    "❤️ Like";
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Likes error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    async function toggleLike() {
+
+        if (!currentUser) {
+
+            likeMessage.textContent =
+                "Please sign in to like this story.";
+
+            return;
+
+        }
+
+
+        try {
+
+            const {
+                data: existingLike,
+                error: findError
+            } =
+                await supabaseClient
+                    .from("story_likes")
+                    .select("id")
+                    .eq(
+                        "story_id",
+                        currentStoryId
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    )
+                    .maybeSingle();
+
+
+            if (findError) {
+
+                console.error(
+                    "Find like error:",
+                    findError
+                );
+
+                likeMessage.textContent =
+                    "Unable to update like.";
+
+                return;
+
+            }
+
+
+            if (existingLike) {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("story_likes")
+                        .delete()
+                        .eq(
+                            "id",
+                            existingLike.id
+                        );
+
+
+                if (error) {
+
+                    console.error(
+                        "Unlike error:",
+                        error
+                    );
+
+                    return;
+
+                }
+
+            } else {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("story_likes")
+                        .insert({
+
+                            story_id:
+                                currentStoryId,
+
+                            user_id:
+                                currentUser.id
+
+                        });
+
+
+                if (error) {
+
+                    console.error(
+                        "Like insert error:",
+                        error
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            likeMessage.textContent = "";
+
+            await loadLikes();
+
+        } catch (error) {
+
+            console.error(
+                "Toggle like error:",
+                error
+            );
+
+            likeMessage.textContent =
+                "Unable to update like.";
+
+        }
+
+    }
+
+
+    likeButton.addEventListener(
+        "click",
+        toggleLike
+    );
+        // =============================
+    // COMMENTS
+    // =============================
+
+    async function loadComments() {
+
+        if (!currentStoryId) return;
+
+        commentsContainer.innerHTML =
+            "Loading comments...";
+
+        try {
+
+            const {
+                data: comments,
+                error
+            } =
+                await supabaseClient
+                    .from("story_comments")
+                    .select(
+                        "id, story_id, user_id, comment, created_at"
+                    )
+                    .eq(
+                        "story_id",
+                        currentStoryId
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Comments error:",
+                    error
+                );
+
+                commentsContainer.innerHTML =
+                    "<p>Unable to load comments.</p>";
+
+                return;
+
+            }
+
+
+            if (
+                !comments ||
+                comments.length === 0
+            ) {
+
+                commentsContainer.innerHTML =
+                    "<p>No comments yet. Be the first to comment!</p>";
+
+                return;
+
+            }
+
+
+            const userIds = [
+                ...new Set(
+                    comments
+                        .map(
+                            comment =>
+                                comment.user_id
+                        )
+                        .filter(Boolean)
+                )
+            ];
+
+
+            const {
+                data: profiles
+            } =
+                await supabaseClient
+                    .from("public_profiles")
+                    .select("id, name")
+                    .in(
+                        "id",
+                        userIds
+                    );
+
+
+            let html = "";
+
+
+            comments.forEach(
+                comment => {
+
+                    const profile =
+                        (
+                            profiles ||
+                            []
+                        ).find(
+                            profile =>
+                                String(
+                                    profile.id
+                                ) ===
+                                String(
+                                    comment.user_id
+                                )
+                        );
+
+
+                    const name =
+                        profile &&
+                        profile.name
+                            ? profile.name
+                            : "Anonymous";
+
+
+                    const date =
+                        comment.created_at
+                            ? new Date(
+                                comment.created_at
+                            ).toLocaleString()
+                            : "";
+
+
+                    let deleteButton = "";
+
+
+                    if (
+                        currentUser &&
+                        currentUser.id ===
+                            comment.user_id
+                    ) {
+
+                        deleteButton = `
+                            <button
+                                class="delete-comment"
+                                type="button"
+                                onclick="deleteComment('${escapeHtml(comment.id)}')"
+                            >
+                                Delete
+                            </button>
+                        `;
+
+                    }
+
+
+                    html += `
+
+                        <div class="comment">
+
+                            <div class="comment-name">
+                                ${escapeHtml(name)}
+                            </div>
+
+                            <div class="comment-date">
+                                ${escapeHtml(date)}
+                            </div>
+
+                            <div class="comment-text">
+                                ${escapeHtml(
+                                    comment.comment
+                                )}
+                            </div>
+
+                            ${deleteButton}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            commentsContainer.innerHTML =
+                html;
+
+
+        } catch (error) {
+
+            console.error(
+                "Unexpected comments error:",
+                error
+            );
+
+            commentsContainer.innerHTML =
+                "<p>Unable to load comments.</p>";
+
+        }
+
+    }
+
+
+    // =============================
+    // DELETE COMMENT
+    // =============================
+
+    async function deleteComment(
+        commentId
+    ) {
+
+        if (!currentUser) return;
+
+
+        const confirmed =
+            confirm(
+                "Delete this comment?"
+            );
+
+
+        if (!confirmed) return;
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("story_comments")
+                    .delete()
+                    .eq(
+                        "id",
+                        commentId
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Delete comment error:",
+                    error
+                );
+
+                alert(
+                    "Unable to delete comment."
+                );
+
+                return;
+
+            }
+
+
+            await loadComments();
+
+
+        } catch (error) {
+
+            console.error(
+                "Delete comment error:",
+                error
+            );
+
+            alert(
+                "Unable to delete comment."
+            );
+
+        }
+
+    }
+
+
+    window.deleteComment =
+        deleteComment;
+
+
+    // =============================
+    // POST COMMENT
+    // =============================
+
+    commentForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            if (!currentUser) {
+
+                commentMessage.textContent =
+                    "Please sign in to comment.";
+
+                return;
+
+            }
+
+
+            const comment =
+                commentInput.value.trim();
+
+
+            if (!comment) return;
+
+
+            commentMessage.textContent =
+                "Posting comment...";
+
+
+            try {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("story_comments")
+                        .insert({
+
+                            story_id:
+                                currentStoryId,
+
+                            user_id:
+                                currentUser.id,
+
+                            comment:
+                                comment
+
+                        });
+
+
+                if (error) {
+
+                    console.error(
+                        "Comment error:",
+                        error
+                    );
+
+                    commentMessage.textContent =
+                        "Unable to post comment.";
+
+                    return;
+
+                }
+
+
+                commentInput.value = "";
+
+
+                commentMessage.textContent =
+                    "Comment posted!";
+
+
+                await loadComments();
+
+
+                setTimeout(
+                    function() {
+
+                        commentMessage.textContent =
+                            "";
+
+                    },
+                    2000
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Unexpected comment error:",
+                    error
+                );
+
+                commentMessage.textContent =
+                    "Unable to post comment.";
+
+            }
+
+        }
+    );
+
+
+    // =============================
+    // SHARE
+    // =============================
+
+    function setupShareLinks(title) {
+    const storyId = new URLSearchParams(window.location.search).get("id");
+
+    if (!storyId) return;
+
+    // Supabase Edge Function that creates the social preview
+    const previewUrl =
+        "https://rqkacmthefndfywxyyxx.supabase.co/functions/v1/story-preview?id=" +
+        encodeURIComponent(storyId);
+
+    const encodedUrl = encodeURIComponent(previewUrl);
+    const encodedTitle = encodeURIComponent(title);
+
+    const whatsapp = document.getElementById("whatsapp-share");
+    const facebook = document.getElementById("facebook-share");
+    const x = document.getElementById("x-share");
+
+    if (whatsapp) {
+        whatsapp.href =
+            "https://wa.me/?text=" +
+            encodedTitle +
+            "%20" +
+            encodedUrl;
+    }
+
+    if (facebook) {
+        facebook.href =
+            "https://www.facebook.com/sharer/sharer.php?u=" +
+            encodedUrl;
+    }
+
+    if (x) {
+        x.href =
+            "https://twitter.com/intent/tweet?text=" +
+            encodedTitle +
+            "&url=" +
+            encodedUrl;
+    }
+}
+
+
+    // =============================
+    // COPY LINK
+    // =============================
+
+    copyLinkButton.addEventListener(
+        "click",
+        async function() {
+
+            const url =
+                window.location.href;
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    url
+                );
+
+                shareMessage.textContent =
+                    "Link copied!";
+
+
+            } catch (error) {
+
+                const textarea =
+                    document.createElement(
+                        "textarea"
+                    );
+
+
+                textarea.value =
+                    url;
+
+
+                document.body.appendChild(
+                    textarea
+                );
+
+
+                textarea.select();
+
+
+                document.execCommand(
+                    "copy"
+                );
+
+
+                textarea.remove();
+
+
+                shareMessage.textContent =
+                    "Link copied!";
+
+            }
+
+
+            setTimeout(
+                function() {
+
+                    shareMessage.textContent =
+                        "";
+
+                },
+                2000
+            );
+
+        }
+    );
+
+
+    // =============================
+    // DARK MODE
+    // =============================
+
+    const darkModeToggle =
+        document.getElementById(
+            "dark-mode-toggle"
+        );
+
+
+    function updateDarkModeButton() {
+
+        if (
+            document.body.classList.contains(
+                "dark-mode"
+            )
+        ) {
+
+            darkModeToggle.textContent =
+                "☀️";
+
+        } else {
+
+            darkModeToggle.textContent =
+                "🌙";
+
+        }
+
+    }
+
+
+    if (
+        localStorage.getItem(
+            "darkMode"
+        ) === "enabled"
+    ) {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+    }
+
+
+    updateDarkModeButton();
+
+
+    darkModeToggle.addEventListener(
+        "click",
+        function() {
+
+            document.body.classList.toggle(
+                "dark-mode"
+            );
+
+
+            if (
+                document.body.classList.contains(
+                    "dark-mode"
+                )
+            ) {
+
+                localStorage.setItem(
+                    "darkMode",
+                    "enabled"
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "darkMode"
+                );
+
+            }
+
+
+            updateDarkModeButton();
+
+        }
+    );
+
+
+    // =============================
+    // READING PROGRESS
+    // =============================
+
+    window.addEventListener(
+        "scroll",
+        function() {
+
+            const scrollTop =
+                window.scrollY;
+
+            const documentHeight =
+                document.documentElement
+                    .scrollHeight -
+                window.innerHeight;
+
+            const progress =
+                documentHeight > 0
+                    ? (
+                        scrollTop /
+                        documentHeight
+                    ) * 100
+                    : 0;
+
+            const progressBar =
+                document.getElementById(
+                    "reading-progress"
+                );
+
+
+            if (progressBar) {
+
+                progressBar.style.width =
+                    progress + "%";
+
+            }
+
+        }
+    );
+
+
+    // =============================
+    // BACK TO TOP
+    // =============================
+
+    const backToTop =
+        document.getElementById(
+            "back-to-top"
+        );
+
+
+    window.addEventListener(
+        "scroll",
+        function() {
+
+            if (
+                window.scrollY > 300
+            ) {
+
+                backToTop.style.display =
+                    "block";
+
+            } else {
+
+                backToTop.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    backToTop.addEventListener(
+        "click",
+        function() {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        }
+    );
+
+
+    // =============================
+    // START
+    // =============================
+
+    async function start() {
+
+        const storyExists =
+            await loadStory();
+
+
+        if (!storyExists) return;
+
+
+        await loadUser();
+
+        await loadLikes();
+
+        await loadComments();
+
+    }
+
+
+    start();
+
+</script>
+<script src="supabase.js"></script>
+<script src="visitor.js"></script>
+
+</body>
+</html>

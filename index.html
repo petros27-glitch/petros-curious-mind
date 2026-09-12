@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- PRIMARY SEO -->
+
+    <title>
+        Petros Curious Mind | The Story Behind Every Story
+    </title>
+    <link rel="canonical" href="https://YOUR-DOMAIN.com/">
+    <meta name="description"
+      content="Petros Curious Mind — The Story Behind Every Story. Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:site_name" content="Petros Curious Mind">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Petros Curious Mind — The Story Behind Every Story">
+<meta name="twitter:description" content="Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+<meta name="twitter:image" content="images/logo.png">
+
+<meta name="robots"
+      content="index, follow">
+
+<meta name="author"
+      content="Petros Curious Mind">
+
+<meta property="og:title"
+      content="Petros Curious Mind — The Story Behind Every Story">
+
+<meta property="og:description"
+      content="Discover fascinating folklore, timeless tales, hidden meanings, and the stories behind the stories.">
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:image"
+      content="images/logo.png">
+
+    <meta
+        name="description"
+        content="Explore fascinating folklore, myths, mysteries, legends, imagination, and hidden truths. Petros Curious Mind uncovers the story behind every story."
+    >
+
+    <meta
+        name="keywords"
+        content="folklore, folktales, myths, legends, mysteries, stories, storytelling, African folklore, hidden truths, Petros Curious Mind"
+    >
+
+    <meta
+        name="author"
+        content="Petros Curious Mind"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+
+    <!-- OPEN GRAPH / SOCIAL MEDIA -->
+
+    <meta
+        property="og:title"
+        content="Petros Curious Mind | The Story Behind Every Story"
+    >
+
+    <meta
+        property="og:description"
+        content="Explore myths, folklore, mysteries, imagination, hidden truths, and stories that make you think deeper."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:image"
+        content="images/logo.png"
+    >
+
+
+    <!-- TWITTER / X -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="Petros Curious Mind"
+    >
+
+    <meta
+        name="twitter:description"
+        content="The Story Behind Every Story."
+    >
+
+    <meta
+        name="twitter:image"
+        content="images/logo.png"
+    >
+
+
+    <!-- STYLES -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="brand">
+
+        <h1>Petros Curious Mind</h1>
+
+        <img
+            src="images/logo.png"
+            alt="Petros Curious Mind logo"
+        >
+
+    </div>
+
+    <p>The Story Behind Every Story</p>
+
+</header>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="navbar">
+
+    <a href="index.html">Home</a>
+
+    <a href="story.html">Stories</a>
+
+    <a href="about.html">About</a>
+
+    <a href="contact.html">Contact</a>
+
+    <button
+        type="button"
+        id="dark-mode-toggle"
+    >
+        🌙 Dark Mode
+    </button>
+
+    <a
+        href="signin.html"
+        id="account-link"
+    >
+        Sign In
+    </a>
+
+</nav>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main>
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h2>
+            Discover the Story Behind Every Story
+        </h2>
+
+        <p>
+            Explore myths, folklore, mysteries, imagination,
+            hidden truths, and stories that make you think deeper.
+        </p>
+
+        <a
+            href="story.html"
+            class="read-button"
+        >
+            Explore Stories →
+        </a>
+
+    </div>
+
+</section>
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h2>
+            Welcome to Petros Curious Mind
+        </h2>
+
+        <p>
+            Petros Curious Mind is a storytelling and curiosity-driven platform
+            that explores the deeper meaning behind stories. Instead of just
+            telling stories, it uncovers hidden truths, ideas, and perspectives
+            that often go unnoticed.
+        </p>
+
+        <p>
+            This platform is built for curious minds — people who ask questions,
+            think deeper, and want to understand what lies beneath the surface
+            of imagination, history, and everyday stories.
+        </p>
+
+    </section>
+<!-- =========================
+     SITE STATISTICS
+========================= -->
+
+<section class="stats-section">
+
+    <div class="stat-card">
+
+        <h3 id="story-count">
+            0
+        </h3>
+
+        <p>Stories Published</p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h3>
+            ∞
+        </h3>
+
+        <p>Curiosity Never Ends</p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <h3>
+            🧠
+        </h3>
+
+        <p>Stories to Discover</p>
+
+    </div>
+
+</section>
+
+    <!-- FEATURED STORY -->
+
+    <section class="featured-section">
+
+        <h2>
+            ⭐ Featured Story
+        </h2>
+
+
+        <div id="featured-story">
+
+            <p>
+                Loading featured story...
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- LATEST STORIES -->
+
+    <section class="stories">
+
+        <h2>
+            Latest Stories
+        </h2>
+
+
+        <div id="latest-stories">
+
+            <p>
+                Loading stories...
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- VIEW ALL -->
+
+    <section class="view-all-section">
+
+        <a
+            href="story.html"
+            class="read-button"
+        >
+            View All Stories →
+        </a>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================
+     BACK TO TOP BUTTON
+========================= -->
+
+<button
+    id="back-to-top"
+    type="button"
+    aria-label="Back to top"
+>
+    ↑
+</button>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 Petros Curious Mind.
+        All rights reserved.
+    </p>
+
+    <p>
+        The Story Behind Every Story
+    </p>
+        <p>
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="terms.html">Terms & Conditions</a> |
+        <a href="cookies.html">Cookies & Advertising</a> |
+        <a href="contact.html">Contact</a>
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+    // =========================================
+    // PETROS CURIOUS MIND — FAST HOMEPAGE LOAD
+    // =========================================
+
+    const featuredContainer =
+        document.getElementById("featured-story");
+
+    const latestContainer =
+        document.getElementById("latest-stories");
+
+
+    // =========================================
+    // ESCAPE HTML
+    // =========================================
+
+    function escapeHtml(text) {
+
+        if (
+            text === null ||
+            text === undefined
+        ) {
+            return "";
+        }
+
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    // =========================================
+    // LOAD USER
+    // =========================================
+
+    async function loadUser() {
+
+        try {
+
+            const {
+                data
+            } =
+                await supabaseClient.auth.getUser();
+
+
+            if (!data || !data.user) {
+                return;
+            }
+
+
+            const {
+                data: profile
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("is_admin")
+                    .eq(
+                        "id",
+                        data.user.id
+                    )
+                    .maybeSingle();
+
+
+            if (
+                profile &&
+                profile.is_admin
+            ) {
+
+                const adminLink =
+                    document.getElementById(
+                        "admin-link"
+                    );
+
+
+                if (adminLink) {
+
+                    adminLink.style.display =
+                        "inline-block";
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "User loading error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // =========================================
+    // LOAD FEATURED STORY
+    // =========================================
+
+    async function loadFeaturedStory() {
+
+        if (!featuredContainer) {
+            return;
+        }
+
+
+        try {
+
+            const {
+                data: story,
+                error
+            } =
+                await supabaseClient
+                    .from("stories")
+                    .select(
+                        "id, title, content, image_url, created_at"
+                    )
+                    .eq(
+                        "published",
+                        true
+                    )
+                    .eq(
+                        "featured",
+                        true
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    )
+                    .limit(1)
+                    .maybeSingle();
+
+
+            if (error) {
+
+                console.error(
+                    "Featured story error:",
+                    error
+                );
+
+                featuredContainer.innerHTML =
+                    "<p>Unable to load featured story.</p>";
+
+                return;
+
+            }
+
+
+            if (!story) {
+
+                featuredContainer.innerHTML =
+                    "<p>No featured story yet.</p>";
+
+                return;
+
+            }
+
+
+            const preview =
+                story.content
+                    ? story.content
+                        .replace(/\s+/g, " ")
+                        .trim()
+                        .slice(0, 180)
+                    : "";
+
+
+            featuredContainer.innerHTML = `
+
+                <article class="featured-card">
+
+                    ${
+                        story.image_url
+                            ? `
+                                <img
+                                    src="${escapeHtml(story.image_url)}"
+                                    alt="${escapeHtml(story.title)}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                              `
+                            : ""
+                    }
+
+                    <div class="featured-content">
+
+                        <h3>
+                            ${escapeHtml(story.title)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(preview)}
+                            ${story.content && story.content.length > 180 ? "..." : ""}
+                        </p>
+
+                        <a
+                            href="read.html?id=${encodeURIComponent(story.id)}"
+                            class="btn"
+                        >
+                            Read Story
+                        </a>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        } catch (error) {
+
+            console.error(
+                "Featured story error:",
+                error
+            );
+
+            featuredContainer.innerHTML =
+                "<p>Unable to load featured story.</p>";
+
+        }
+
+    }
+
+
+    // =========================================
+    // LOAD LATEST STORIES
+    // =========================================
+
+    async function loadLatestStories() {
+
+        if (!latestContainer) {
+            return;
+        }
+
+
+        try {
+
+            const {
+                data: stories,
+                error
+            } =
+                await supabaseClient
+                    .from("stories")
+                    .select(
+                        "id, title, content, image_url, created_at"
+                    )
+                    .eq(
+                        "published",
+                        true
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    )
+                    .limit(6);
+
+
+            if (error) {
+
+                console.error(
+                    "Stories error:",
+                    error
+                );
+
+                latestContainer.innerHTML =
+                    "<p>Unable to load stories.</p>";
+
+                return;
+
+            }
+
+
+            if (
+                !stories ||
+                stories.length === 0
+            ) {
+
+                latestContainer.innerHTML =
+                    "<p>No stories published yet.</p>";
+
+                return;
+
+            }
+
+
+            latestContainer.innerHTML =
+                stories.map(
+                    story => {
+
+                        const preview =
+                            story.content
+                                ? story.content
+                                    .replace(/\s+/g, " ")
+                                    .trim()
+                                    .slice(0, 150)
+                                : "";
+
+
+                        return `
+
+                            <article class="story-card">
+
+                                ${
+                                    story.image_url
+                                        ? `
+                                            <img
+                                                src="${escapeHtml(story.image_url)}"
+                                                alt="${escapeHtml(story.title)}"
+                                                loading="lazy"
+                                                decoding="async"
+                                            >
+                                          `
+                                        : ""
+                                }
+
+                                <div class="story-card-content">
+
+                                    <h3>
+                                        ${escapeHtml(story.title)}
+                                    </h3>
+
+                                    <p>
+                                        ${escapeHtml(preview)}
+                                        ${story.content && story.content.length > 150 ? "..." : ""}
+                                    </p>
+
+                                    <a
+                                        href="read.html?id=${encodeURIComponent(story.id)}"
+                                        class="btn"
+                                    >
+                                        Read Story
+                                    </a>
+
+                                </div>
+
+                            </article>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+        } catch (error) {
+
+            console.error(
+                "Stories error:",
+                error
+            );
+
+            latestContainer.innerHTML =
+                "<p>Unable to load stories.</p>";
+
+        }
+
+    }
+
+
+    // =========================================
+    // STORY COUNT
+    // =========================================
+
+    async function loadStoryCount() {
+
+        const storyCount =
+            document.getElementById(
+                "story-count"
+            );
+
+
+        if (!storyCount) {
+            return;
+        }
+
+
+        try {
+
+            const {
+                count,
+                error
+            } =
+                await supabaseClient
+                    .from("stories")
+                    .select(
+                        "id",
+                        {
+                            count: "exact",
+                            head: true
+                        }
+                    )
+                    .eq(
+                        "published",
+                        true
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Story count error:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            storyCount.textContent =
+                count || 0;
+
+        } catch (error) {
+
+            console.error(
+                "Story count error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // =========================================
+    // START EVERYTHING IN PARALLEL
+    // =========================================
+
+    async function startWebsite() {
+
+        // Start all independent requests
+        // at the same time.
+
+        await Promise.allSettled([
+
+            loadUser(),
+
+            loadFeaturedStory(),
+
+            loadLatestStories(),
+
+            loadStoryCount()
+
+        ]);
+
+    }
+
+
+    // =========================================
+    // START AFTER HTML IS READY
+    // =========================================
+
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            startWebsite
+        );
+
+    } else {
+
+        startWebsite();
+
+    }
+
+</script>
+
+
+<script src="auth-nav.js"></script>
+<script src="supabase.js"></script>
+<script src="visitor.js"></script>
+
+</body>
+
+</html>
