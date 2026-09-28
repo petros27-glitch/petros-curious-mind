@@ -323,47 +323,65 @@
 
                 <div class="share-section">
 
-                    <h3>Share this story</h3>
+    <h3>Share this story</h3>
 
-                    <a
-                        id="whatsapp-share"
-                        class="share-button"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        WhatsApp
-                    </a>
+    <div class="share-buttons">
 
-                    <a
-                        id="facebook-share"
-                        class="share-button"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        Facebook
-                    </a>
+        <a
+            id="whatsapp-share"
+            class="share-button share-whatsapp"
+            target="_blank"
+            rel="noopener"
+        >
+            WhatsApp
+        </a>
 
-                    <a
-                        id="x-share"
-                        class="share-button"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        X
-                    </a>
+        <a
+            id="whatsapp-business-share"
+            class="share-button share-business"
+        >
+            WhatsApp Business
+        </a>
 
-                    <button
-                        id="copy-link"
-                        class="share-button"
-                        type="button"
-                    >
-                        Copy Link
-                    </button>
+        <a
+            id="facebook-share"
+            class="share-button share-facebook"
+            target="_blank"
+            rel="noopener"
+        >
+            Facebook
+        </a>
 
-                    <p id="share-message"></p>
+        <a
+            id="x-share"
+            class="share-button share-x"
+            target="_blank"
+            rel="noopener"
+        >
+            X
+        </a>
 
-                </div>
+        <button
+            id="copy-link"
+            class="share-button share-copy"
+            type="button"
+        >
+            Copy Link
+        </button>
 
+        <button
+            id="more-share"
+            class="share-button share-more"
+            type="button"
+        >
+            More
+        </button>
+
+    </div>
+
+    <p id="share-message"></p>
+
+</div>
                 <section class="comments-section">
 
                     <h2>Comments</h2>
@@ -1412,120 +1430,191 @@ async function loadStory() {
     );
 
 
-    // =============================
-    // SHARE
-    // =============================
+  // =============================
+// SHARE
+// =============================
 
-    function setupShareLinks(title) {
-    const storyId = new URLSearchParams(window.location.search).get("id");
+function setupShareLinks(title) {
+
+    const storyId =
+        new URLSearchParams(window.location.search).get("id");
 
     if (!storyId) return;
 
-    // Supabase Edge Function that creates the social preview
+    // IMPORTANT:
+    // Keep using the Supabase Edge Function
+    // because it creates the story-specific
+    // social media preview.
     const previewUrl =
         "https://rqkacmthefndfywxyyxx.supabase.co/functions/v1/story-preview?id=" +
         encodeURIComponent(storyId);
 
-    const encodedUrl = encodeURIComponent(previewUrl);
-    const encodedTitle = encodeURIComponent(title);
+    const encodedUrl =
+        encodeURIComponent(previewUrl);
 
-    const whatsapp = document.getElementById("whatsapp-share");
-    const facebook = document.getElementById("facebook-share");
-    const x = document.getElementById("x-share");
+    const encodedTitle =
+        encodeURIComponent(title);
+
+    const whatsapp =
+        document.getElementById("whatsapp-share");
+
+    const whatsappBusiness =
+        document.getElementById("whatsapp-business-share");
+
+    const facebook =
+        document.getElementById("facebook-share");
+
+    const x =
+        document.getElementById("x-share");
+
+    const moreShare =
+        document.getElementById("more-share");
+
+
+    // =============================
+    // WHATSAPP
+    // =============================
 
     if (whatsapp) {
+
         whatsapp.href =
             "https://wa.me/?text=" +
             encodedTitle +
             "%20" +
             encodedUrl;
+
     }
 
+
+    // =============================
+    // WHATSAPP BUSINESS
+    // =============================
+
+    if (whatsappBusiness) {
+
+        const businessText =
+            encodeURIComponent(
+                title + " " + previewUrl
+            );
+
+        whatsappBusiness.href =
+            "whatsapp://send?text=" +
+            businessText;
+
+    }
+
+
+    // =============================
+    // FACEBOOK
+    // =============================
+
     if (facebook) {
+
         facebook.href =
             "https://www.facebook.com/sharer/sharer.php?u=" +
             encodedUrl;
+
     }
 
+
+    // =============================
+    // X
+    // =============================
+
     if (x) {
+
         x.href =
             "https://twitter.com/intent/tweet?text=" +
             encodedTitle +
             "&url=" +
             encodedUrl;
+
     }
-}
 
 
     // =============================
-    // COPY LINK
+    // MORE
     // =============================
 
-    copyLinkButton.addEventListener(
-        "click",
-        async function() {
+    if (moreShare) {
 
-            const url =
-                window.location.href;
+        moreShare.addEventListener(
+            "click",
+            async function() {
 
-
-            try {
-
-                await navigator.clipboard.writeText(
-                    url
-                );
-
-                shareMessage.textContent =
-                    "Link copied!";
+                const shareData = {
+                    title: title,
+                    text:
+                        "Read " +
+                        title +
+                        " on Petros Curious Mind",
+                    url: previewUrl
+                };
 
 
-            } catch (error) {
+                // Use the device's native
+                // sharing menu when available.
+                if (
+                    navigator.share &&
+                    typeof navigator.share === "function"
+                ) {
 
-                const textarea =
-                    document.createElement(
-                        "textarea"
+                    try {
+
+                        await navigator.share(
+                            shareData
+                        );
+
+                    } catch (error) {
+
+                        // User cancelled the
+                        // share menu.
+                        console.log(
+                            "Share cancelled."
+                        );
+
+                    }
+
+                    return;
+
+                }
+
+
+                // Fallback if native sharing
+                // is not supported.
+                try {
+
+                    await navigator.clipboard.writeText(
+                        window.location.href
                     );
 
+                    shareMessage.textContent =
+                        "Sharing is not supported here. Link copied!";
 
-                textarea.value =
-                    url;
-
-
-                document.body.appendChild(
-                    textarea
-                );
-
-
-                textarea.select();
-
-
-                document.execCommand(
-                    "copy"
-                );
-
-
-                textarea.remove();
-
-
-                shareMessage.textContent =
-                    "Link copied!";
-
-            }
-
-
-            setTimeout(
-                function() {
+                } catch (error) {
 
                     shareMessage.textContent =
-                        "";
+                        "Please use Copy Link to share this story.";
 
-                },
-                2000
-            );
+                }
 
-        }
-    );
 
+                setTimeout(
+                    function() {
+
+                        shareMessage.textContent =
+                            "";
+
+                    },
+                    3000
+                );
+
+            }
+        );
+
+    }
+
+}
 
     // =============================
     // DARK MODE
