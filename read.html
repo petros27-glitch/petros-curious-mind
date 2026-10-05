@@ -1441,10 +1441,6 @@ function setupShareLinks(title) {
 
     if (!storyId) return;
 
-    // IMPORTANT:
-    // Keep using the Supabase Edge Function
-    // because it creates the story-specific
-    // social media preview.
     const previewUrl =
         "https://rqkacmthefndfywxyyxx.supabase.co/functions/v1/story-preview?id=" +
         encodeURIComponent(storyId);
@@ -1470,28 +1466,15 @@ function setupShareLinks(title) {
     const moreShare =
         document.getElementById("more-share");
 
-
-    // =============================
-    // WHATSAPP
-    // =============================
-
     if (whatsapp) {
-
         whatsapp.href =
             "https://wa.me/?text=" +
             encodedTitle +
             "%20" +
             encodedUrl;
-
     }
 
-
-    // =============================
-    // WHATSAPP BUSINESS
-    // =============================
-
     if (whatsappBusiness) {
-
         const businessText =
             encodeURIComponent(
                 title + " " + previewUrl
@@ -1500,41 +1483,21 @@ function setupShareLinks(title) {
         whatsappBusiness.href =
             "whatsapp://send?text=" +
             businessText;
-
     }
 
-
-    // =============================
-    // FACEBOOK
-    // =============================
-
     if (facebook) {
-
         facebook.href =
             "https://www.facebook.com/sharer/sharer.php?u=" +
             encodedUrl;
-
     }
 
-
-    // =============================
-    // X
-    // =============================
-
     if (x) {
-
         x.href =
             "https://twitter.com/intent/tweet?text=" +
             encodedTitle +
             "&url=" +
             encodedUrl;
-
     }
-
-
-    // =============================
-    // MORE
-    // =============================
 
     if (moreShare) {
 
@@ -1551,9 +1514,6 @@ function setupShareLinks(title) {
                     url: previewUrl
                 };
 
-
-                // Use the device's native
-                // sharing menu when available.
                 if (
                     navigator.share &&
                     typeof navigator.share === "function"
@@ -1567,8 +1527,6 @@ function setupShareLinks(title) {
 
                     } catch (error) {
 
-                        // User cancelled the
-                        // share menu.
                         console.log(
                             "Share cancelled."
                         );
@@ -1576,12 +1534,8 @@ function setupShareLinks(title) {
                     }
 
                     return;
-
                 }
 
-
-                // Fallback if native sharing
-                // is not supported.
                 try {
 
                     await navigator.clipboard.writeText(
@@ -1595,9 +1549,7 @@ function setupShareLinks(title) {
 
                     shareMessage.textContent =
                         "Please use Copy Link to share this story.";
-
                 }
-
 
                 setTimeout(
                     function() {
@@ -1608,12 +1560,9 @@ function setupShareLinks(title) {
                     },
                     3000
                 );
-
             }
         );
-
     }
-
 }
 
     // =============================
