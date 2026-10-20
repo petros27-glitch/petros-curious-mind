@@ -1,286 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Admin Dashboard | Petros Curious Mind
-    </title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Petros Curious Mind</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-
 <header>
-
     <div class="container">
-
         <div class="brand">
-
-            <h1>
-                Petros Curious Mind
-            </h1>
-
+            <h1>Petros Curious Mind</h1>
         </div>
 
-
         <nav>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="admin.html">
-                Admin
-            </a>
-
-            <a href="account.html">
-                Account
-            </a>
-
-            <a href="#" id="logoutBtn">
-                Logout
-            </a>
-
+            <a href="index.html">Home</a>
+            <a href="admin.html">Admin</a>
+            <a href="account.html">Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
         </nav>
-
     </div>
-
 </header>
-
-
 
 <main class="container">
 
-
-    <!-- ADMIN WELCOME -->
-
     <section class="hero">
-
-        <h2>
-            Admin Dashboard
-        </h2>
-
-        <p id="adminWelcome">
-            Checking admin access...
-        </p>
-
+        <h2>Admin Dashboard</h2>
+        <p id="adminWelcome">Checking admin access...</p>
     </section>
 
-
-
-    <!-- STATISTICS -->
-
+    <!-- DASHBOARD STATISTICS -->
     <section class="dashboard-stats">
 
-
         <div class="stat-card">
-
-            <h3>
-                Total Stories
-            </h3>
-
-            <strong id="total-stories">
-                0
-            </strong>
-
+            <h3>Total Stories</h3>
+            <strong id="total-stories">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Published
-            </h3>
-
-            <strong id="published-stories">
-                0
-            </strong>
-
+            <h3>Published</h3>
+            <strong id="published-stories">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Drafts
-            </h3>
-
-            <strong id="draft-stories">
-                0
-            </strong>
-
+            <h3>Drafts</h3>
+            <strong id="draft-stories">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Total Likes
-            </h3>
-
-            <strong id="total-likes">
-                0
-            </strong>
-
+            <h3>Total Likes</h3>
+            <strong id="total-likes">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Total Comments
-            </h3>
-
-            <strong id="total-comments">
-                0
-            </strong>
-
+            <h3>Total Comments</h3>
+            <strong id="total-comments">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Total Users
-            </h3>
-
-            <strong id="total-users">
-                0
-            </strong>
-
+            <h3>Total Users</h3>
+            <strong id="total-users">0</strong>
         </div>
 
-
-
         <div class="stat-card">
-
-            <h3>
-                Total Visits
-            </h3>
-
-            <strong id="total-visits">
-                0
-            </strong>
-
+            <h3>Total Visits</h3>
+            <strong id="total-visits">0</strong>
         </div>
-
 
     </section>
 
-
-
-    <!-- CREATE / EDIT STORY -->
-
+    <!-- CREATE OR EDIT STORY -->
     <section class="admin-section">
 
-
-        <h2 id="formTitle">
-            Create New Story
-        </h2>
-
+        <h2 id="formTitle">Create New Story</h2>
 
         <form id="storyForm">
 
-
             <div class="form-group">
-
-                <label for="title">
-                    Story Title
-                </label>
-
+                <label for="title">Story Title</label>
                 <input
                     type="text"
                     id="title"
                     placeholder="Enter story title"
                     required
                 >
-
             </div>
 
-
-
             <div class="form-group">
-
-                <label for="content">
-                    Story Content
-                </label>
-
+                <label for="content">Story Content</label>
                 <textarea
                     id="content"
                     rows="15"
                     placeholder="Write your story here..."
                     required
                 ></textarea>
-
             </div>
 
-
-
             <div class="form-group">
-
-                <label for="imageUrl">
-                    Image URL
-                </label>
-
+                <label for="imageUrl">Image URL</label>
                 <input
                     type="url"
                     id="imageUrl"
                     placeholder="https://example.com/image.jpg"
                 >
-
             </div>
-
-
-
-            <!-- IMAGE PREVIEW -->
 
             <div id="imagePreview"></div>
 
-
-
-            <div class="form-group">
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        id="published"
-                    >
-
-                    Publish this story
-
-                </label>
-
-            </div>
-
-
+            <p class="form-help">
+                Save your story privately as a draft, or publish it
+                for readers when it is ready.
+            </p>
 
             <div class="admin-buttons">
 
-                <button
-                    type="submit"
-                    id="saveButton"
-                >
-                    Publish Story
+                <button type="button" id="saveDraftButton">
+                    Save as Draft
                 </button>
 
+                <button type="submit" id="publishButton">
+                    Publish Story
+                </button>
 
                 <button
                     type="button"
@@ -292,128 +134,100 @@
 
             </div>
 
-
         </form>
 
     </section>
 
-
-
-    <!-- STORIES -->
-
+    <!-- STORY MANAGEMENT -->
     <section class="admin-section">
 
-
         <div class="section-heading">
+            <h2 id="storiesHeading">All Stories</h2>
 
-            <h2>
+            <button type="button" id="refreshButton">
+                Refresh
+            </button>
+        </div>
+
+        <div
+            class="admin-buttons story-filters"
+            role="group"
+            aria-label="Filter stories"
+        >
+            <button
+                type="button"
+                class="story-filter active"
+                data-filter="all"
+            >
                 All Stories
-            </h2>
-
+            </button>
 
             <button
                 type="button"
-                onclick="loadEverything()"
+                class="story-filter"
+                data-filter="published"
             >
-                Refresh
+                Published
             </button>
 
+            <button
+                type="button"
+                class="story-filter"
+                data-filter="drafts"
+            >
+                Drafts
+            </button>
         </div>
-
-
 
         <div id="storiesContainer">
-
-            <p>
-                Loading stories...
-            </p>
-
+            <p>Loading stories...</p>
         </div>
-
 
     </section>
 
-
 </main>
 
-
-
 <footer>
-
     <div class="container">
-
-        <p>
-            © 2026 Petros Curious Mind
-        </p>
-
+        <p>© 2026 Petros Curious Mind</p>
 
         <div>
-
-            <a href="about.html">
-                About
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-            <a href="privacy.html">
-                Privacy
-            </a>
-
-            <a href="terms.html">
-                Terms
-            </a>
-
-            <a href="cookies.html">
-                Cookies
-            </a>
-
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="cookies.html">Cookies</a>
         </div>
-
     </div>
-
 </footer>
 
-
-
 <!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
 
-
 <script>
+"use strict";
 
-// PART 2 CONTINUES here
 // ============================================
 // VARIABLES
 // ============================================
 
 let currentUser = null;
 let editingStoryId = null;
+let allStories = [];
+let activeStoryFilter = "all";
 
-const storyForm =
-    document.getElementById("storyForm");
+const storyForm = document.getElementById("storyForm");
+const titleInput = document.getElementById("title");
+const contentInput = document.getElementById("content");
+const imageUrlInput = document.getElementById("imageUrl");
+const imagePreview = document.getElementById("imagePreview");
 
-const titleInput =
-    document.getElementById("title");
+const saveDraftButton =
+    document.getElementById("saveDraftButton");
 
-const contentInput =
-    document.getElementById("content");
-
-const imageUrlInput =
-    document.getElementById("imageUrl");
-
-const publishedInput =
-    document.getElementById("published");
-
-const imagePreview =
-    document.getElementById("imagePreview");
-
-const saveButton =
-    document.getElementById("saveButton");
+const publishButton =
+    document.getElementById("publishButton");
 
 const cancelButton =
     document.getElementById("cancelButton");
@@ -430,7 +244,6 @@ const storiesContainer =
 // ============================================
 
 function escapeHtml(value) {
-
     if (value === null || value === undefined) {
         return "";
     }
@@ -445,36 +258,23 @@ function escapeHtml(value) {
 
 
 // ============================================
-// CHECK ADMIN
+// CHECK ADMIN ACCESS
 // ============================================
 
 async function checkAdmin() {
-
     const {
-        data: {
-            user
-        },
+        data: { user },
         error: userError
     } = await supabaseClient.auth.getUser();
 
-
     if (userError || !user) {
-
-        console.error(
-            "Authentication error:",
-            userError
-        );
-
+        console.error("Authentication error:", userError);
         alert("Please sign in first.");
-
         location.href = "signin.html";
-
         return false;
     }
 
-
     currentUser = user;
-
 
     const {
         data: profile,
@@ -485,49 +285,22 @@ async function checkAdmin() {
         .eq("id", user.id)
         .single();
 
-
     if (profileError) {
-
-        console.error(
-            "Profile error:",
-            profileError
-        );
-
-        alert(
-            "Could not load your profile."
-        );
-
+        console.error("Profile error:", profileError);
+        alert("Could not load your profile.");
         return false;
     }
-
 
     if (!profile || profile.is_admin !== true) {
-
-        alert(
-            "You are not authorized to access this page."
-        );
-
+        alert("You are not authorized to access this page.");
         location.href = "index.html";
-
         return false;
     }
 
-
-    const welcome =
-        document.getElementById(
-            "adminWelcome"
-        );
-
-
-    if (welcome) {
-
-        welcome.textContent =
-            "Welcome, " +
-            (profile.name || "Admin") +
-            " — you have administrator access.";
-
-    }
-
+    document.getElementById("adminWelcome").textContent =
+        "Welcome, " +
+        (profile.name || "Admin") +
+        " — you have administrator access.";
 
     return true;
 }
@@ -538,168 +311,142 @@ async function checkAdmin() {
 // ============================================
 
 function updateImagePreview() {
-
-    const url =
-        imageUrlInput.value.trim();
-
+    const url = imageUrlInput.value.trim();
 
     if (!url) {
-
         imagePreview.innerHTML = "";
-
         return;
     }
 
-
     imagePreview.innerHTML = `
-
         <div class="story-image">
-
             <img
                 src="${escapeHtml(url)}"
                 alt="Image preview"
                 loading="lazy"
                 decoding="async"
-                onerror="
-                    this.parentElement.innerHTML =
-                    '<p>Image could not be loaded.</p>'
-                "
             >
-
         </div>
-
     `;
+
+    const image = imagePreview.querySelector("img");
+
+    image.addEventListener("error", function () {
+        imagePreview.innerHTML =
+            "<p>Image could not be loaded.</p>";
+    });
 }
 
 
 // ============================================
-// SAVE STORY
+// SAVE AS DRAFT OR PUBLISH
 // ============================================
 
-async function saveStory() {
-
-    const title =
-        titleInput.value.trim();
-
-    const content =
-        contentInput.value.trim();
-
-    const imageUrl =
-        imageUrlInput.value.trim();
-
-    const published =
-        publishedInput.checked;
-
+async function saveStory(publishNow) {
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+    const imageUrl = imageUrlInput.value.trim();
 
     if (!title || !content) {
-
-        alert(
-            "Please enter a title and story content."
-        );
-
+        alert("Please enter a title and story content.");
         return;
     }
 
+    if (!currentUser) {
+        alert("Your admin session could not be verified. Please sign in again.");
+        return;
+    }
 
-    saveButton.disabled = true;
+    saveDraftButton.disabled = true;
+    publishButton.disabled = true;
 
-    saveButton.textContent =
-        editingStoryId
-            ? "Updating..."
-            : "Saving...";
+    const clickedButton = publishNow
+        ? publishButton
+        : saveDraftButton;
 
+    clickedButton.textContent = publishNow
+        ? "Publishing..."
+        : "Saving draft...";
 
     const storyData = {
-
         title: title,
-
         content: content,
-
         image_url: imageUrl || null,
-
-        published: published
-
+        published: publishNow
     };
 
+    try {
+        let result;
 
-    let error;
-
-
-    if (editingStoryId) {
-
-        const result =
-            await supabaseClient
+        if (editingStoryId) {
+            result = await supabaseClient
                 .from("stories")
                 .update(storyData)
-                .eq(
-                    "id",
-                    editingStoryId
-                );
-
-        error = result.error;
-
-
-    } else {
-
-        const result =
-            await supabaseClient
+                .eq("id", editingStoryId);
+        } else {
+            result = await supabaseClient
                 .from("stories")
                 .insert(storyData);
+        }
 
-        error = result.error;
-    }
+        if (result.error) {
+            console.error("Save story error:", result.error);
 
+            alert(
+                "Could not save story:\n\n" +
+                result.error.message
+            );
 
-    if (error) {
+            return;
+        }
 
-        console.error(
-            "Save story error:",
-            error
-        );
-
-        alert(
-            "Could not save story:\n\n" +
-            error.message
-        );
-
-        saveButton.disabled = false;
-
-        saveButton.textContent =
-            editingStoryId
-                ? "Update Story"
-                : "Publish Story";
-
-        return;
-    }
-
-
-    alert(
-        editingStoryId
-            ? "Story updated successfully."
+        const message = editingStoryId
+            ? (
+                publishNow
+                    ? "Story updated and published."
+                    : "Story saved as a draft."
+            )
             : (
-                published
+                publishNow
                     ? "Story published successfully."
                     : "Story saved as draft."
-            )
-    );
+            );
 
+        alert(message);
 
-    resetForm();
+        resetForm();
 
-    await loadEverything();
+        await loadEverything();
 
+    } catch (error) {
+        console.error("Unexpected save error:", error);
+
+        alert(
+            "Something went wrong while saving the story. " +
+            "Please try again."
+        );
+
+    } finally {
+        saveDraftButton.disabled = false;
+        publishButton.disabled = false;
+
+        saveDraftButton.textContent = "Save as Draft";
+
+        if (!editingStoryId) {
+            publishButton.textContent = "Publish Story";
+        } else {
+            publishButton.textContent = "Update & Publish";
+        }
+    }
 }
 
 
 // ============================================
-// LOAD STORIES
+// LOAD STORIES FROM SUPABASE
 // ============================================
 
 async function loadStories() {
-
-    storiesContainer.innerHTML =
-        "<p>Loading stories...</p>";
-
+    storiesContainer.innerHTML = "<p>Loading stories...</p>";
 
     const {
         data: stories,
@@ -709,215 +456,171 @@ async function loadStories() {
         .select(
             "id,title,content,image_url,published,featured,created_at"
         )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
+        .order("created_at", { ascending: false });
 
     if (error) {
-
-        console.error(
-            "LOAD STORIES ERROR:",
-            error
-        );
-
+        console.error("Load stories error:", error);
 
         storiesContainer.innerHTML = `
-
             <div class="admin-error">
-
-                <h3>
-                    Could not load stories
-                </h3>
-
-                <p>
-                    ${escapeHtml(error.message)}
-                </p>
-
+                <h3>Could not load stories</h3>
+                <p>${escapeHtml(error.message)}</p>
             </div>
-
         `;
 
         return;
     }
 
+    allStories = stories || [];
 
-    if (!stories || stories.length === 0) {
+    renderStories();
+}
 
-        storiesContainer.innerHTML = `
 
-            <div class="admin-empty">
+// ============================================
+// FILTER STORIES
+// ============================================
 
-                <h3>
-                    No stories found
-                </h3>
+function setStoryFilter(filter) {
+    activeStoryFilter = filter;
 
-                <p>
-                    There are currently no stories.
-                </p>
+    document.querySelectorAll(".story-filter").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.filter === filter
+        );
+    });
 
-            </div>
+    const heading = document.getElementById("storiesHeading");
 
-        `;
+    heading.textContent =
+        filter === "drafts"
+            ? "Draft Stories"
+            : filter === "published"
+                ? "Published Stories"
+                : "All Stories";
 
-        return;
-    }
+    renderStories();
+}
 
+
+// ============================================
+// DISPLAY STORIES
+// ============================================
+
+function renderStories() {
+    const stories = allStories.filter(story => {
+        if (activeStoryFilter === "published") {
+            return story.published === true;
+        }
+
+        if (activeStoryFilter === "drafts") {
+            return story.published === false;
+        }
+
+        return true;
+    });
 
     storiesContainer.innerHTML = "";
 
+    if (stories.length === 0) {
+        let message = "There are currently no stories.";
+
+        if (activeStoryFilter === "drafts") {
+            message =
+                "You have no saved drafts yet. " +
+                "Use Save as Draft when creating a story.";
+        } else if (activeStoryFilter === "published") {
+            message = "You have no published stories yet.";
+        }
+
+        storiesContainer.innerHTML = `
+            <div class="admin-empty">
+                <h3>No stories found</h3>
+                <p>${escapeHtml(message)}</p>
+            </div>
+        `;
+
+        return;
+    }
 
     stories.forEach(story => {
+        const card = document.createElement("div");
 
-        const card =
-            document.createElement("div");
+        card.className = "story-card";
 
-        card.className =
-            "story-card";
+        const status = story.published
+            ? "Published"
+            : "Draft";
 
+        const featured = story.featured
+            ? "Featured"
+            : "Not Featured";
 
-        const status =
-            story.published
-                ? "Published"
-                : "Draft";
-
-
-        const featured =
-            story.featured
-                ? "Featured"
-                : "Not Featured";
-
-
-        const date =
-            story.created_at
-                ? new Date(
-                    story.created_at
-                ).toLocaleDateString()
-                : "";
-
+        const date = story.created_at
+            ? new Date(story.created_at).toLocaleDateString()
+            : "";
 
         let imageHtml = "";
 
-
         if (story.image_url) {
-
             imageHtml = `
-
                 <div class="story-image">
-
                     <img
-                        src="${escapeHtml(
-                            story.image_url
-                        )}"
-                        alt="${escapeHtml(
-                            story.title
-                        )}"
+                        src="${escapeHtml(story.image_url)}"
+                        alt="${escapeHtml(story.title)}"
                         loading="lazy"
                         decoding="async"
                     >
-
                 </div>
-
             `;
         }
 
-
         card.innerHTML = `
-
             ${imageHtml}
 
             <div class="featured-content">
 
-                <h3>
-                    ${escapeHtml(
-                        story.title
-                    )}
-                </h3>
-
+                <h3>${escapeHtml(story.title)}</h3>
 
                 <p>
-
-                    <strong>
-                        Status:
-                    </strong>
-
-                    ${status}
-
+                    <strong>Status:</strong> ${status}
                     &nbsp; | &nbsp;
-
-                    <strong>
-                        ${featured}
-                    </strong>
-
+                    <strong>${featured}</strong>
                 </p>
-
 
                 <p>
-                    ${escapeHtml(
-                        getPreviewText(
-                            story.content,
-                            220
-                        )
-                    )}
+                    ${escapeHtml(getPreviewText(story.content, 220))}
                 </p>
 
-
-                <small>
-                    Created:
-                    ${escapeHtml(date)}
-                </small>
-
+                <small>Created: ${escapeHtml(date)}</small>
 
                 <div class="admin-buttons">
 
                     <button
                         type="button"
-                        onclick="editStory(
-                            '${story.id}'
-                        )"
+                        class="edit-story-button"
                     >
                         Edit
                     </button>
 
-
                     <button
                         type="button"
-                        onclick="togglePublish(
-                            '${story.id}',
-                            ${story.published}
-                        )"
+                        class="toggle-publish-button"
                     >
-                        ${
-                            story.published
-                                ? "Unpublish"
-                                : "Publish"
-                        }
+                        ${story.published ? "Unpublish" : "Publish"}
                     </button>
 
-
                     <button
                         type="button"
-                        onclick="setFeatured(
-                            '${story.id}',
-                            ${story.featured === true}
-                        )"
+                        class="toggle-feature-button"
                     >
-                        ${
-                            story.featured
-                                ? "Unfeature"
-                                : "Feature"
-                        }
+                        ${story.featured ? "Unfeature" : "Feature"}
                     </button>
 
-
                     <button
                         type="button"
-                        onclick="deleteStory(
-                            '${story.id}'
-                        )"
+                        class="delete-story-button"
                     >
                         Delete
                     </button>
@@ -925,47 +628,51 @@ async function loadStories() {
                 </div>
 
             </div>
-
         `;
 
+        card.querySelector(".edit-story-button")
+            .addEventListener("click", function () {
+                editStory(story.id);
+            });
+
+        card.querySelector(".toggle-publish-button")
+            .addEventListener("click", function () {
+                togglePublish(story.id, story.published === true);
+            });
+
+        card.querySelector(".toggle-feature-button")
+            .addEventListener("click", function () {
+                setFeatured(story.id, story.featured === true);
+            });
+
+        card.querySelector(".delete-story-button")
+            .addEventListener("click", function () {
+                deleteStory(story.id);
+            });
 
         storiesContainer.appendChild(card);
-
     });
 }
 
 
 // ============================================
-// TEXT PREVIEW
+// SHORT STORY PREVIEW
 // ============================================
 
-function getPreviewText(
-    text,
-    maxLength
-) {
-
+function getPreviewText(text, maxLength) {
     if (!text) {
         return "";
     }
 
-
-    const clean =
-        String(text)
-            .replace(/\s+/g, " ")
-            .trim();
-
+    const clean = String(text)
+        .replace(/\s+/g, " ")
+        .trim();
 
     if (clean.length <= maxLength) {
         return clean;
     }
 
-
-    return (
-        clean.substring(
-            0,
-            maxLength
-        ) + "..."
-    );
+    return clean.substring(0, maxLength) + "...";
 }
 
 
@@ -974,7 +681,6 @@ function getPreviewText(
 // ============================================
 
 async function editStory(id) {
-
     const {
         data: story,
         error
@@ -984,13 +690,8 @@ async function editStory(id) {
         .eq("id", id)
         .single();
 
-
     if (error) {
-
-        console.error(
-            "Edit story error:",
-            error
-        );
+        console.error("Edit story error:", error);
 
         alert(
             "Could not load story:\n\n" +
@@ -1000,35 +701,28 @@ async function editStory(id) {
         return;
     }
 
-
     editingStoryId = id;
 
+    titleInput.value = story.title || "";
+    contentInput.value = story.content || "";
+    imageUrlInput.value = story.image_url || "";
 
-    titleInput.value =
-        story.title || "";
+    formTitle.textContent = story.published
+        ? "Edit Published Story"
+        : "Edit Draft";
 
-    contentInput.value =
-        story.content || "";
+    publishButton.textContent = story.published
+        ? "Update & Publish"
+        : "Publish Story";
 
-    imageUrlInput.value =
-        story.image_url || "";
+    saveDraftButton.textContent = "Save as Draft";
 
-    publishedInput.checked =
-        story.published === true;
+    cancelButton.style.display = "inline-block";
 
-
-    formTitle.textContent =
-        "Edit Story";
-
-    saveButton.textContent =
-        "Update Story";
-
-    cancelButton.style.display =
-        "inline-block";
-
+    saveDraftButton.disabled = false;
+    publishButton.disabled = false;
 
     updateImagePreview();
-
 
     window.scrollTo({
         top: 0,
@@ -1042,95 +736,81 @@ async function editStory(id) {
 // ============================================
 
 function resetForm() {
-
     editingStoryId = null;
 
-
     titleInput.value = "";
-
     contentInput.value = "";
-
     imageUrlInput.value = "";
 
-    publishedInput.checked = false;
+    formTitle.textContent = "Create New Story";
 
+    saveDraftButton.textContent = "Save as Draft";
+    publishButton.textContent = "Publish Story";
 
-    formTitle.textContent =
-        "Create New Story";
+    saveDraftButton.disabled = false;
+    publishButton.disabled = false;
 
-    saveButton.textContent =
-        "Publish Story";
-
-    cancelButton.style.display =
-        "none";
-
+    cancelButton.style.display = "none";
 
     imagePreview.innerHTML = "";
 }
 
 
 // ============================================
-// PUBLISH / UNPUBLISH
+// PUBLISH / UNPUBLISH STORY
 // ============================================
 
-async function togglePublish(
-    id,
-    currentStatus
-) {
+async function togglePublish(id, currentStatus) {
+    const action = currentStatus
+        ? "unpublish"
+        : "publish";
 
-    const {
-        error
-    } = await supabaseClient
+    const confirmed = confirm(
+        currentStatus
+            ? "Do you want to unpublish this story? It will become a draft."
+            : "Do you want to publish this story?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const { error } = await supabaseClient
         .from("stories")
         .update({
             published: !currentStatus
         })
         .eq("id", id);
 
-
     if (error) {
-
-        console.error(
-            "Publish error:",
-            error
-        );
+        console.error("Publish error:", error);
 
         alert(
-            "Could not update story:\n\n" +
+            "Could not " + action + " story:\n\n" +
             error.message
         );
 
         return;
     }
 
-
     await loadEverything();
 }
+
+
 // ============================================
-// FEATURE / UNFEATURE
+// FEATURE / UNFEATURE STORY
 // ============================================
 
-async function setFeatured(
-    id,
-    currentStatus
-) {
-
-    const {
-        error
-    } = await supabaseClient
+async function setFeatured(id, currentStatus) {
+    const { error } = await supabaseClient
         .from("stories")
         .update({
             featured: !currentStatus
         })
         .eq("id", id);
 
-
     if (error) {
-
-        console.error(
-            "Featured error:",
-            error
-        );
+        console.error("Featured error:", error);
 
         alert(
             "Could not update featured status:\n\n" +
@@ -1139,7 +819,6 @@ async function setFeatured(
 
         return;
     }
-
 
     await loadEverything();
 }
@@ -1150,32 +829,21 @@ async function setFeatured(
 // ============================================
 
 async function deleteStory(id) {
-
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this story?"
-        );
-
+    const confirmed = confirm(
+        "Are you sure you want to delete this story? This cannot be undone."
+    );
 
     if (!confirmed) {
         return;
     }
 
-
-    const {
-        error
-    } = await supabaseClient
+    const { error } = await supabaseClient
         .from("stories")
         .delete()
         .eq("id", id);
 
-
     if (error) {
-
-        console.error(
-            "Delete story error:",
-            error
-        );
+        console.error("Delete story error:", error);
 
         alert(
             "Could not delete story:\n\n" +
@@ -1185,44 +853,32 @@ async function deleteStory(id) {
         return;
     }
 
-
     if (editingStoryId === id) {
         resetForm();
     }
-
 
     await loadEverything();
 }
 
 
 // ============================================
-// UPDATE STAT
+// UPDATE STATISTICS
 // ============================================
 
 function updateStat(id, value) {
-
-    const element =
-        document.getElementById(id);
-
+    const element = document.getElementById(id);
 
     if (element) {
-
-        element.textContent =
-            value ?? 0;
+        element.textContent = value ?? 0;
     }
 }
 
 
 // ============================================
-// LOAD DASHBOARD STATS
+// LOAD DASHBOARD STATISTICS
 // ============================================
 
 async function loadDashboardStats() {
-
-    console.log(
-        "Loading dashboard statistics..."
-    );
-
 
     // TOTAL STORIES
     const {
@@ -1235,20 +891,10 @@ async function loadDashboardStats() {
             head: true
         });
 
-
     if (storiesError) {
-
-        console.error(
-            "Total stories error:",
-            storiesError
-        );
-
+        console.error("Total stories error:", storiesError);
     } else {
-
-        updateStat(
-            "total-stories",
-            totalStories
-        );
+        updateStat("total-stories", totalStories);
     }
 
 
@@ -1262,25 +908,12 @@ async function loadDashboardStats() {
             count: "exact",
             head: true
         })
-        .eq(
-            "published",
-            true
-        );
-
+        .eq("published", true);
 
     if (publishedError) {
-
-        console.error(
-            "Published stories error:",
-            publishedError
-        );
-
+        console.error("Published stories error:", publishedError);
     } else {
-
-        updateStat(
-            "published-stories",
-            publishedStories
-        );
+        updateStat("published-stories", publishedStories);
     }
 
 
@@ -1294,25 +927,12 @@ async function loadDashboardStats() {
             count: "exact",
             head: true
         })
-        .eq(
-            "published",
-            false
-        );
-
+        .eq("published", false);
 
     if (draftError) {
-
-        console.error(
-            "Draft stories error:",
-            draftError
-        );
-
+        console.error("Draft stories error:", draftError);
     } else {
-
-        updateStat(
-            "draft-stories",
-            draftStories
-        );
+        updateStat("draft-stories", draftStories);
     }
 
 
@@ -1327,20 +947,10 @@ async function loadDashboardStats() {
             head: true
         });
 
-
     if (likesError) {
-
-        console.error(
-            "Likes error:",
-            likesError
-        );
-
+        console.error("Likes error:", likesError);
     } else {
-
-        updateStat(
-            "total-likes",
-            totalLikes
-        );
+        updateStat("total-likes", totalLikes);
     }
 
 
@@ -1355,20 +965,10 @@ async function loadDashboardStats() {
             head: true
         });
 
-
     if (commentsError) {
-
-        console.error(
-            "Comments error:",
-            commentsError
-        );
-
+        console.error("Comments error:", commentsError);
     } else {
-
-        updateStat(
-            "total-comments",
-            totalComments
-        );
+        updateStat("total-comments", totalComments);
     }
 
 
@@ -1379,20 +979,10 @@ async function loadDashboardStats() {
     } = await supabaseClient
         .rpc("admin_user_count");
 
-
     if (usersError) {
-
-        console.error(
-            "Users count error:",
-            usersError
-        );
-
+        console.error("Users count error:", usersError);
     } else {
-
-        updateStat(
-            "total-users",
-            totalUsers
-        );
+        updateStat("total-users", totalUsers);
     }
 
 
@@ -1407,26 +997,11 @@ async function loadDashboardStats() {
             head: true
         });
 
-
     if (visitsError) {
-
-        console.error(
-            "Visits error:",
-            visitsError
-        );
-
+        console.error("Visits error:", visitsError);
     } else {
-
-        updateStat(
-            "total-visits",
-            totalVisits
-        );
+        updateStat("total-visits", totalVisits);
     }
-
-
-    console.log(
-        "Dashboard statistics loaded."
-    );
 }
 
 
@@ -1435,7 +1010,6 @@ async function loadDashboardStats() {
 // ============================================
 
 async function loadEverything() {
-
     await Promise.all([
         loadStories(),
         loadDashboardStats()
@@ -1447,121 +1021,87 @@ async function loadEverything() {
 // FORM EVENTS
 // ============================================
 
-storyForm.addEventListener(
-    "submit",
-    async function(event) {
+storyForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    await saveStory(true);
+});
 
-        event.preventDefault();
+saveDraftButton.addEventListener("click", async function () {
+    await saveStory(false);
+});
 
-        await saveStory();
-    }
-);
+cancelButton.addEventListener("click", function () {
+    resetForm();
+});
 
+imageUrlInput.addEventListener("input", function () {
+    updateImagePreview();
+});
 
-cancelButton.addEventListener(
-    "click",
-    function() {
+document.querySelectorAll(".story-filter").forEach(button => {
+    button.addEventListener("click", function () {
+        setStoryFilter(button.dataset.filter);
+    });
+});
 
-        resetForm();
-    }
-);
-
-
-imageUrlInput.addEventListener(
-    "input",
-    function() {
-
-        updateImagePreview();
-    }
-);
+document.getElementById("refreshButton")
+    .addEventListener("click", loadEverything);
 
 
 // ============================================
 // LOGOUT
 // ============================================
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async function(event) {
+document.getElementById("logoutBtn")
+    .addEventListener("click", async function (event) {
+        event.preventDefault();
 
-            event.preventDefault();
+        const confirmed = confirm("Do you want to logout?");
 
-
-            const confirmed =
-                confirm(
-                    "Do you want to logout?"
-                );
-
-
-            if (!confirmed) {
-                return;
-            }
-
-
-            const {
-                error
-            } = await supabaseClient
-                .auth
-                .signOut();
-
-
-            if (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-                alert(
-                    "Could not logout."
-                );
-
-                return;
-            }
-
-
-            location.href =
-                "signin.html";
+        if (!confirmed) {
+            return;
         }
-    );
+
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            console.error("Logout error:", error);
+            alert("Could not logout.");
+            return;
+        }
+
+        location.href = "signin.html";
+    });
 
 
 // ============================================
-// START ADMIN
+// START ADMIN DASHBOARD
 // ============================================
 
 async function startAdmin() {
+    console.log("Starting admin dashboard...");
 
-    console.log(
-        "Starting admin dashboard..."
-    );
+    try {
+        const allowed = await checkAdmin();
 
+        if (!allowed) {
+            return;
+        }
 
-    const allowed =
-        await checkAdmin();
+        await loadEverything();
 
-
-    if (!allowed) {
-        return;
+    } catch (error) {
+        console.error("Could not start admin dashboard:", error);
+        alert("Could not load the admin dashboard. Please refresh the page.");
     }
-
-
-    await loadEverything();
 }
-
 
 startAdmin();
 
 </script>
 
-
 <script src="dark-mode.js"></script>
-
 <script src="auth-nav.js"></script>
 
-
 </body>
-
 </html>
