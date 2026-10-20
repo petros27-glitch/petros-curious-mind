@@ -327,21 +327,17 @@
 
     <div class="share-buttons">
 
-        <a
-            id="whatsapp-share"
-            class="share-button share-whatsapp"
-            target="_blank"
-            rel="noopener"
-        >
-            WhatsApp
-        </a>
+       
+<a
+    id="whatsapp-share"
+    class="share-button share-whatsapp"
+    target="_blank"
+    rel="noopener"
+>
+    WhatsApp or WhatsApp Business
+</a>
 
-        <a
-            id="whatsapp-business-share"
-            class="share-button share-business"
-        >
-            WhatsApp Business
-        </a>
+        
 
         <a
             id="facebook-share"
@@ -1434,8 +1430,8 @@ async function loadStory() {
 // SHARE
 // =============================
 
-function setupShareLinks(title) {
 
+function setupShareLinks(title) {
     const storyId =
         new URLSearchParams(window.location.search).get("id");
 
@@ -1445,52 +1441,29 @@ function setupShareLinks(title) {
         "https://rqkacmthefndfywxyyxx.supabase.co/functions/v1/story-preview?id=" +
         encodeURIComponent(storyId);
 
-    const encodedUrl =
-        encodeURIComponent(previewUrl);
+    const encodedUrl = encodeURIComponent(previewUrl);
+    const encodedTitle = encodeURIComponent(title);
 
-    const encodedTitle =
-        encodeURIComponent(title);
+    const whatsapp = document.getElementById("whatsapp-share");
+    const facebook = document.getElementById("facebook-share");
+    const x = document.getElementById("x-share");
+    const moreShare = document.getElementById("more-share");
 
-    const whatsapp =
-        document.getElementById("whatsapp-share");
-
-    const whatsappBusiness =
-        document.getElementById("whatsapp-business-share");
-
-    const facebook =
-        document.getElementById("facebook-share");
-
-    const x =
-        document.getElementById("x-share");
-
-    const moreShare =
-        document.getElementById("more-share");
-
+    // WhatsApp or WhatsApp Business
     if (whatsapp) {
         whatsapp.href =
-            "https://wa.me/?text=" +
-            encodedTitle +
-            "%20" +
-            encodedUrl;
-    }
-
-    if (whatsappBusiness) {
-        const businessText =
-            encodeURIComponent(
-                title + " " + previewUrl
-            );
-
-        whatsappBusiness.href =
             "whatsapp://send?text=" +
-            businessText;
+            encodeURIComponent(title + " " + previewUrl);
     }
 
+    // Facebook
     if (facebook) {
         facebook.href =
             "https://www.facebook.com/sharer/sharer.php?u=" +
             encodedUrl;
     }
 
+    // X
     if (x) {
         x.href =
             "https://twitter.com/intent/tweet?text=" +
@@ -1499,71 +1472,43 @@ function setupShareLinks(title) {
             encodedUrl;
     }
 
-    if (moreShare) {
+    // More: native device sharing
+    if (moreShare && !moreShare.dataset.shareReady) {
+        moreShare.dataset.shareReady = "true";
 
-        moreShare.addEventListener(
-            "click",
-            async function() {
+        moreShare.addEventListener("click", async function() {
+            const shareData = {
+                title: title,
+                text: "Read " + title + " on Petros Curious Mind",
+                url: previewUrl
+            };
 
-                const shareData = {
-                    title: title,
-                    text:
-                        "Read " +
-                        title +
-                        " on Petros Curious Mind",
-                    url: previewUrl
-                };
-
-                if (
-                    navigator.share &&
-                    typeof navigator.share === "function"
-                ) {
-
-                    try {
-
-                        await navigator.share(
-                            shareData
-                        );
-
-                    } catch (error) {
-
-                        console.log(
-                            "Share cancelled."
-                        );
-
-                    }
-
-                    return;
-                }
-
+            if (navigator.share) {
                 try {
-
-                    await navigator.clipboard.writeText(
-                        window.location.href
-                    );
-
-                    shareMessage.textContent =
-                        "Sharing is not supported here. Link copied!";
-
+                    await navigator.share(shareData);
                 } catch (error) {
-
-                    shareMessage.textContent =
-                        "Please use Copy Link to share this story.";
+                    if (error.name !== "AbortError") {
+                        console.error("Sharing failed:", error);
+                    }
                 }
-
-                setTimeout(
-                    function() {
-
-                        shareMessage.textContent =
-                            "";
-
-                    },
-                    3000
-                );
+                return;
             }
-        );
+
+            try {
+                await navigator.clipboard.writeText(previewUrl);
+                shareMessage.textContent = "Story link copied!";
+            } catch (error) {
+                shareMessage.textContent =
+                    "Please use Copy Link to share this story.";
+            }
+
+            setTimeout(function() {
+                shareMessage.textContent = "";
+            }, 3000);
+        });
     }
 }
+
 
     // =============================
     // DARK MODE
