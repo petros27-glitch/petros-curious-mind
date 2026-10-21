@@ -1,71 +1,36 @@
+
 /* =========================
    DARK MODE
 ========================= */
 
-const darkModeToggle =
-    document.getElementById(
-        "dark-mode-toggle"
-    );
-
+const darkModeToggle = document.getElementById("dark-mode-toggle");
 
 /* LOAD SAVED MODE */
 
-if (
-    localStorage.getItem(
-        "darkMode"
-    ) === "enabled"
-) {
-
-    document.body.classList.add(
-        "dark-mode"
-    );
-
-    darkModeToggle.textContent =
-        "☀️ Light Mode";
-
+if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark-mode");
 }
 
+if (darkModeToggle) {
+    darkModeToggle.textContent =
+        document.body.classList.contains("dark-mode")
+            ? "☀️ Light Mode"
+            : "🌙 Dark Mode";
 
-/* TOGGLE MODE */
+    /* TOGGLE MODE */
 
-darkModeToggle.addEventListener(
-    "click",
-    function() {
+    darkModeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
 
-        document.body.classList.toggle(
-            "dark-mode"
+        const isDarkMode =
+            document.body.classList.contains("dark-mode");
+
+        localStorage.setItem(
+            "darkMode",
+            isDarkMode ? "enabled" : "disabled"
         );
 
-
-        if (
-            document.body.classList.contains(
-                "dark-mode"
-            )
-        ) {
-
-            localStorage.setItem(
-                "darkMode",
-                "enabled"
-            );
-
-
-            darkModeToggle.textContent =
-                "☀️ Light Mode";
-
-        }
-
-        else {
-
-            localStorage.setItem(
-                "darkMode",
-                "disabled"
-            );
-
-
-            darkModeToggle.textContent =
-                "🌙 Dark Mode";
-
-        }
-
-    }
-);
+        darkModeToggle.textContent =
+            isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
+    });
+}

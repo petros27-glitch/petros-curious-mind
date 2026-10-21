@@ -1998,3 +1998,13 @@ img {
         scroll-behavior: auto;
     }
 }
+
+/* Admin dashboard: smaller story images on desktop */
+@media (min-width: 769px) {
+    #storiesContainer .story-image img {
+        height: 220px;
+        max-height: 220px;
+        width: 100%;
+        object-fit: contain;
+    }
+}
