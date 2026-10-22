@@ -1,36 +1,19 @@
 
-/* =========================
-   DARK MODE
-========================= */
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("dark-mode-toggle");
 
-const darkModeToggle = document.getElementById("dark-mode-toggle");
+    if (!toggle) return;
 
-/* LOAD SAVED MODE */
+    function applyDarkMode(enabled) {
+        document.body.classList.toggle("dark-mode", enabled);
+        localStorage.setItem("darkMode", enabled ? "enabled" : "disabled");
+        toggle.textContent = enabled ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
 
-if (localStorage.getItem("darkMode") === "enabled") {
-    document.body.classList.add("dark-mode");
-}
+    applyDarkMode(localStorage.getItem("darkMode") === "enabled");
 
-if (darkModeToggle) {
-    darkModeToggle.textContent =
-        document.body.classList.contains("dark-mode")
-            ? "☀️ Light Mode"
-            : "🌙 Dark Mode";
-
-    /* TOGGLE MODE */
-
-    darkModeToggle.addEventListener("click", function () {
-        document.body.classList.toggle("dark-mode");
-
-        const isDarkMode =
-            document.body.classList.contains("dark-mode");
-
-        localStorage.setItem(
-            "darkMode",
-            isDarkMode ? "enabled" : "disabled"
-        );
-
-        darkModeToggle.textContent =
-            isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
+    toggle.addEventListener("click", function () {
+        const enabled = !document.body.classList.contains("dark-mode");
+        applyDarkMode(enabled);
     });
-}
+});
